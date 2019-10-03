@@ -64,3 +64,4 @@ __history
 *.local
 *.identcache
 *.stat
+*.dcu
