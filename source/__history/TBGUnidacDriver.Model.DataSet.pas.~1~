@@ -1,7 +1,0 @@
-unit TBGUnidacDriver.Model.DataSet;
-
-interface
-
-implementation
-
-end.

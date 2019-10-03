@@ -1,7 +1,0 @@
-unit TBGDBExpressDriver.Model.DataSet;
-
-interface
-
-implementation
-
-end.
