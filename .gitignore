@@ -60,3 +60,7 @@ __recovery/
 
 # Castalia statistics file (since XE7 Castalia is distributed with Delphi)
 *.stat
+__history
+*.local
+*.identcache
+*.stat
