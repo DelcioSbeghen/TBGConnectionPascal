@@ -3,7 +3,12 @@ unit TBGConnection.Model.DataSet.Interfaces;
 interface
 
 uses
-  Data.DB;
+  {$ifndef FPC}
+  Data.DB
+  {$else}
+  DB
+  {$endif}
+  ;
 
 type
   ICacheDataSetSubject = interface;

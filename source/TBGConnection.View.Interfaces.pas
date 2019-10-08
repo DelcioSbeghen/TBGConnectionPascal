@@ -2,6 +2,11 @@ unit TBGConnection.View.Interfaces;
 
 interface
 
+{$ifdef FPC}
+{$mode objfpc}{$H+}
+{$endif}
+
+
 uses
   TBGConnection.Model.Interfaces, TBGConnection.Model.DataSet.Interfaces;
 

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="4">
+    <Name Value="TBGConnection"/>
+    <Type Value="RunAndDesignTime"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <SearchPaths>
+        <IncludeFiles Value="../../img/lazarus"/>
+        <OtherUnitFiles Value="../../source;../../fpc/rtl-generics/src"/>
+        <UnitOutputDirectory Value="lib/$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+    </CompilerOptions>
+    <Files Count="12">
+      <Item1>
+        <Filename Value="../../source/TBGConnection.Model.Interfaces.pas"/>
+        <UnitName Value="TBGConnection.Model.Interfaces"/>
+      </Item1>
+      <Item2>
+        <Filename Value="../../source/TBGConnection.View.Interfaces.pas"/>
+        <UnitName Value="TBGConnection.View.Interfaces"/>
+      </Item2>
+      <Item3>
+        <Filename Value="../../source/TBGConnection.View.Principal.pas"/>
+        <UnitName Value="TBGConnection.View.Principal"/>
+      </Item3>
+      <Item4>
+        <Filename Value="../../source/TBGConnection.Model.Conexao.Parametros.pas"/>
+        <UnitName Value="TBGConnection.Model.Conexao.Parametros"/>
+      </Item4>
+      <Item5>
+        <Filename Value="../../source/TBGConnection.Model.DataSet.Proxy.pas"/>
+        <UnitName Value="TBGConnection.Model.DataSet.Proxy"/>
+      </Item5>
+      <Item6>
+        <Filename Value="../../source/TBGConnection.Model.DataSet.Observer.pas"/>
+        <UnitName Value="TBGConnection.Model.DataSet.Observer"/>
+      </Item6>
+      <Item7>
+        <Filename Value="../../source/TBGConnection.Model.DataSet.Factory.pas"/>
+        <UnitName Value="TBGConnection.Model.DataSet.Factory"/>
+      </Item7>
+      <Item8>
+        <Filename Value="../../source/TBGConnection.Model.DataSet.Interfaces.pas"/>
+        <UnitName Value="TBGConnection.Model.DataSet.Interfaces"/>
+      </Item8>
+      <Item9>
+        <Filename Value="../../source/TBGConnection.Model.Helper.pas"/>
+        <UnitName Value="TBGConnection.Model.Helper"/>
+      </Item9>
+      <Item11>
+        <Filename Value="tbgconnectionreg.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="TBGConnectionReg"/>
+      </Item11>
+      <Item12>
+        <Filename Value="../../img/lazarus/tbgconnection.lrs"/>
+        <Type Value="LRS"/>
+      </Item12>
+    </Files>
+    <RequiredPkgs Count="2">
+      <Item1>
+        <PackageName Value="LCL"/>
+      </Item1>
+      <Item2>
+        <PackageName Value="FCL"/>
+      </Item2>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+      <UseFileFilters Value="True"/>
+    </PublishOptions>
+  </Package>
+</CONFIG>

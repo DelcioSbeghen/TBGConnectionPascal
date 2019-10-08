@@ -3,7 +3,12 @@ unit TBGConnection.Model.Interfaces;
 interface
 
 uses
-  System.Classes, Data.DB, TBGConnection.Model.DataSet.Interfaces;
+  {$ifndef FPC}
+  System.Classes, Data.DB,
+  {$else}
+  Classes, DB,
+  {$endif}
+  TBGConnection.Model.DataSet.Interfaces;
 
 type
   TChangeDataSet = procedure of Object;

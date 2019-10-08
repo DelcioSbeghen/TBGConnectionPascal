@@ -2,13 +2,31 @@ unit TBGConnection.Model.DataSet.Observer;
 
 interface
 
-uses SysUtils, TBGConnection.Model.Interfaces, System.Generics.Collections, Data.DB,
+{$ifdef FPC}
+  {Necessário para uso do package rtl-generics:->  Generics.Collections}
+  {$MODE DELPHI}{$H+}
+{$endif}
+
+uses
+  {$ifndef FPC}
+  System.SysUtils,
+  System.Generics.Collections,
+  Data.DB,
+  {$else}
+  SysUtils,
+  Generics.Defaults,
+  Generics.Helpers,
+  Generics.Strings,
+  Generics.Collections,
+  DB,
+  {$endif}
+  TBGConnection.Model.Interfaces,
   TBGConnection.Model.DataSet.Interfaces;
 
 Type
   TConnectionModelDataSetObserver = class(TInterfacedObject, ICacheDataSetSubject)
   private
-    FLista : TList<ICacheDataSetObserver>;
+    FLista: TList<ICacheDataSetObserver>;
   public
     constructor Create;
     destructor Destroy; override;

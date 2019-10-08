@@ -2,12 +2,25 @@ unit TBGZeosDriver.Model.Query;
 
 interface
 
+{$ifdef FPC}
+  {Necessário para uso do package rtl-generics:->  Generics.Collections}
+  {$MODE DELPHI}{$H+}
+{$endif}
+
 uses
-  TBGConnection.Model.Interfaces, Data.DB, System.Classes,
-  System.SysUtils, ZConnection, ZDataset,
+  {$ifndef FPC}
+  Data.DB, System.Classes,
+  System.SysUtils,
+  System.Generics.Collections,
+  {$else}
+  DB, Classes,
+  SysUtils,
+  Generics.Collections,
+  {$endif}
+  ZConnection, ZDataset,
+  TBGConnection.Model.Interfaces,
   TBGConnection.Model.DataSet.Interfaces, TBGConnection.Model.DataSet.Proxy,
-  TBGConnection.Model.DataSet.Observer, TBGConnection.Model.DataSet.Factory,
-  System.Generics.Collections;
+  TBGConnection.Model.DataSet.Observer, TBGConnection.Model.DataSet.Factory;
 
 Type
   TZeosModelQuery = class(TInterfacedObject, iQuery)

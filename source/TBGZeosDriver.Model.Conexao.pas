@@ -3,8 +3,14 @@ unit TBGZeosDriver.Model.Conexao;
 interface
 
 uses
-  TBGConnection.Model.Interfaces, System.Classes,
-  ZConnection, Data.DB, TBGConnection.Model.DataSet.Interfaces;
+  {$ifndef FPC}
+  System.Classes, Data.DB, System.SysUtils,
+  {$else}
+  Classes, DB, SysUtils,
+  {$endif}
+  ZConnection,
+  TBGConnection.Model.Interfaces,
+  TBGConnection.Model.DataSet.Interfaces;
 
 Type
   TZeosDriverModelConexao = class(TInterfacedObject, iConexao)
@@ -27,7 +33,7 @@ Type
 implementation
 
 uses
-  System.SysUtils, TBGConnection.Model.DataSet.Proxy;
+  TBGConnection.Model.DataSet.Proxy;
 
 { TZeosDriverModelConexao }
 

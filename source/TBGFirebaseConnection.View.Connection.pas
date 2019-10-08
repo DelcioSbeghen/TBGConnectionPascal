@@ -32,7 +32,7 @@ procedure Register;
 
 implementation
 
-{$R .\img\firebase.dcr}
+{$R ..\..\img\firebase.dcr}
 
 uses
   TBGFirebaseConnection.Model.Connect, TBGFirebaseConnection.Model.Put,

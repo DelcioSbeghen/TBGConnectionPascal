@@ -3,7 +3,16 @@ unit TBGRestDWDriver.Model.DataSet;
 interface
 
 uses
-  TBGConnection.Model.DataSet.Interfaces, Data.DB, uRESTDWPoolerDB, TBGConnection.Model.DataSet.Observer;
+  {$ifndef FPC}
+  Data.DB,
+  System.SysUtils,
+  {$else}
+  DB,
+  SysUtils,
+  {$endif}
+  uRESTDWPoolerDB,
+  TBGConnection.Model.DataSet.Interfaces,
+  TBGConnection.Model.DataSet.Observer;
 
 Type
   TConnectionModelRestDWDataSet = class(TInterfacedObject, iDataSet, ICacheDataSetObserver)
@@ -25,9 +34,6 @@ Type
   end;
 
 implementation
-
-uses
-  System.SysUtils;
 
 { TConnectionModelRestDWDataSet }
 

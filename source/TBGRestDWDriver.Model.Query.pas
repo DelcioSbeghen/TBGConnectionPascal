@@ -1,13 +1,30 @@
-unit TBGRestDWDriver.Model.Query;
+﻿unit TBGRestDWDriver.Model.Query;
 
 interface
 
+{$ifdef FPC}
+  {Necessário para uso do package rtl-generics:->  Generics.Collections}
+  {$MODE DELPHI}{$H+}
+{$endif}
+
 uses
-  TBGConnection.Model.Interfaces, Data.DB, System.Classes,
-  System.SysUtils, uRESTDWPoolerDB,
+  {$ifndef FPC}
+  Data.DB,
+  System.Classes,
+  System.SysUtils,
+  System.Generics.Collections,
+  FireDAC.Comp.Client,
+  {$else}
+  DB,
+  Classes,
+  SysUtils,
+  Generics.Collections,
+  {$endif}
+  uRESTDWPoolerDB,
+  TBGConnection.Model.Interfaces,
   TBGConnection.Model.DataSet.Interfaces,
-  TBGConnection.Model.DataSet.Proxy, FireDAC.Comp.Client,
-  TBGConnection.Model.DataSet.Observer, System.Generics.Collections,
+  TBGConnection.Model.DataSet.Proxy,
+  TBGConnection.Model.DataSet.Observer,
   TBGConnection.Model.Helper;
 
 Type
@@ -113,14 +130,19 @@ begin
   Query.AfterDelete := ApplyUpdates;
   Query.AutoCommitData := False;
   Query.AutoRefreshAfterCommit := True;
-  Query.InBlockEvents := false;
   FQuery.Add(Query);
 end;
 
 function TRestDWModelQuery.LocalSQL(Value: TComponent): iQuery;
 begin
   Result := Self;
+  {$ifdef FPC}
+  raise Exception.Create('Função não suportada por este driver');
+  {$else}
+  {$IFDEF RESTFDMEMTABLE}
   GetQuery.LocalSQL := TFDCustomLocalSQL(Value);
+  {$ENDIF}
+  {$endif}
 end;
 
 procedure TRestDWModelQuery.ApplyUpdates(DataSet: TDataSet);

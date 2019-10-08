@@ -33,6 +33,6 @@ requires
   TBGConnection;
 
 contains
-  TBGQuery.View.Principal in 'source\TBGQuery.View.Principal.pas';
+  TBGQuery.View.Principal in '..\..\source\TBGQuery.View.Principal.pas';
 
 end.

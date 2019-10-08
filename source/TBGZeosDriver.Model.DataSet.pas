@@ -3,8 +3,16 @@ unit TBGZeosDriver.Model.DataSet;
 interface
 
 uses
-  TBGConnection.Model.DataSet.Interfaces, Data.DB,
-  TBGConnection.Model.DataSet.Observer, ZDataset;
+  {$ifndef FPC}
+  Data.DB,
+  System.SysUtils,
+  {$else}
+  DB,
+  SysUtils,
+  {$endif}
+  ZDataset,
+  TBGConnection.Model.DataSet.Interfaces,
+  TBGConnection.Model.DataSet.Observer;
 
 Type
   TConnectionModelZeosDataSet = class(TInterfacedObject, iDataSet, ICacheDataSetObserver)
@@ -26,9 +34,6 @@ Type
   end;
 
 implementation
-
-uses
-  System.SysUtils;
 
 { TConnectionModelZeosDataSet }
 

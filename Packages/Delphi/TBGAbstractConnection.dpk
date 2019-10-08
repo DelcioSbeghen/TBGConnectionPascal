@@ -32,9 +32,9 @@ requires
   dbrtl;
 
 contains
-  TBGConnection.Model.Interfaces in 'source\TBGConnection.Model.Interfaces.pas',
-  TBGConnection.View.Interfaces in 'source\TBGConnection.View.Interfaces.pas',
-  TBGConnection.View.Principal in 'source\TBGConnection.View.Principal.pas',
-  TBGConnection.Model.Conexao.Parametros in 'source\TBGConnection.Model.Conexao.Parametros.pas';
+  TBGConnection.Model.Interfaces in '..\..\source\TBGConnection.Model.Interfaces.pas',
+  TBGConnection.View.Interfaces in '..\..\source\TBGConnection.View.Interfaces.pas',
+  TBGConnection.View.Principal in '..\..\source\TBGConnection.View.Principal.pas',
+  TBGConnection.Model.Conexao.Parametros in '..\..\source\TBGConnection.Model.Conexao.Parametros.pas';
 
 end.

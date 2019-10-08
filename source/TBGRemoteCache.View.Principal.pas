@@ -3,7 +3,12 @@ unit TBGRemoteCache.View.Principal;
 interface
 
 uses
-  TBGRemoteCache.Model.Interfaces, System.Classes;
+  {$ifndef FPC}
+  System.Classes,
+  {$else}
+  Classes,
+  {$endif}
+  TBGRemoteCache.Model.Interfaces;
 
 Type
   TTBGRemoteCache = class(TComponent, iRemoteCache)
@@ -14,7 +19,9 @@ Type
       class function New : iRemoteCache;
   end;
 
+{$ifndef FPC}
 procedure Register;
+{$endif}
 
 implementation
 
@@ -36,10 +43,12 @@ begin
   Result := Self.Create;
 end;
 
+{$ifndef FPC}
 procedure Register;
 begin
   RegisterComponents('TBGAbstractConnection', [TTBGRemoteCache]);
 end;
+{$endif}
 
 
 end.

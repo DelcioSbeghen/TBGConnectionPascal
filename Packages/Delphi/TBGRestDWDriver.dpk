@@ -42,9 +42,9 @@ requires
   TBGConnection;
 
 contains
-  TBGRestDWDriver.Model.Conexao in 'source\TBGRestDWDriver.Model.Conexao.pas',
-  TBGRestDWDriver.Model.Query in 'source\TBGRestDWDriver.Model.Query.pas',
-  TBGRestDWDriver.View.Driver in 'source\TBGRestDWDriver.View.Driver.pas',
-  TBGRestDWDriver.Model.DataSet in 'source\TBGRestDWDriver.Model.DataSet.pas';
+  TBGRestDWDriver.Model.Conexao in '..\..\source\TBGRestDWDriver.Model.Conexao.pas',
+  TBGRestDWDriver.Model.Query in '..\..\source\TBGRestDWDriver.Model.Query.pas',
+  TBGRestDWDriver.View.Driver in '..\..\source\TBGRestDWDriver.View.Driver.pas',
+  TBGRestDWDriver.Model.DataSet in '..\..\source\TBGRestDWDriver.Model.DataSet.pas';
 
 end.

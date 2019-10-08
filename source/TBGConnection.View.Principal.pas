@@ -3,12 +3,18 @@ unit TBGConnection.View.Principal;
 interface
 
 uses
+  {$ifndef FPC}
+  System.Classes,
+  System.SysUtils,
+  {$else}
+  Classes,
+  SysUtils,
+  {$endif}
   TBGConnection.View.Interfaces, TBGConnection.Model.Interfaces,
-  System.Classes, TBGConnection.Model.DataSet.Interfaces,
+  TBGConnection.Model.DataSet.Interfaces,
   TBGConnection.Model.DataSet.Observer;
 
 Type
-  [ComponentPlatformsAttribute(pidWin32 or pidWin64 or pidAndroid)]
   TTBGConnection = class(TComponent, iTBGConnection)
     private
     FObserver : TConnectionModelDataSetObserver;
@@ -23,14 +29,18 @@ Type
       property Driver : iDriver read GetDriver write SetDriver;
   end;
 
+{$ifndef FPC}
 procedure Register;
+{$endif}
 
 implementation
 
 uses
-  TBGConnection.Model.DataSet.Proxy, System.SysUtils;
+  TBGConnection.Model.DataSet.Proxy;
 
+{$ifndef FPC}
 {$R Icones.dcr}
+{$endif}
 
 { TTBGConnection }
 
@@ -62,10 +72,12 @@ begin
   FDriver := Value;
 end;
 
+{$ifndef FPC}
 procedure Register;
 begin
   RegisterComponents('TBGAbstractConnection', [TTBGConnection]);
 end;
+{$endif}
 
 initialization
   TTBGConnection.Create;

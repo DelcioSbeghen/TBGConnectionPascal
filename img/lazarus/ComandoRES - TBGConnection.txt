@@ -1,0 +1,3 @@
+c:\lazarus\tools\lazres.exe tbgconnection.lrs TBGConnection.png
+
+pause

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="4">
+    <Name Value="TBGQuery"/>
+    <Type Value="RunAndDesignTime"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <SearchPaths>
+        <IncludeFiles Value="../../img/lazarus"/>
+        <OtherUnitFiles Value="../../source"/>
+        <UnitOutputDirectory Value="lib/$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+    </CompilerOptions>
+    <Files Count="3">
+      <Item1>
+        <Filename Value="../../source/TBGQuery.View.Principal.pas"/>
+        <UnitName Value="TBGQuery.View.Principal"/>
+      </Item1>
+      <Item2>
+        <Filename Value="tbgqueyreg.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="TBGQueyReg"/>
+      </Item2>
+      <Item3>
+        <Filename Value="../../img/lazarus/tbgquery.lrs"/>
+        <Type Value="LRS"/>
+      </Item3>
+    </Files>
+    <RequiredPkgs Count="2">
+      <Item1>
+        <PackageName Value="LCL"/>
+      </Item1>
+      <Item2>
+        <PackageName Value="FCL"/>
+      </Item2>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+      <UseFileFilters Value="True"/>
+    </PublishOptions>
+  </Package>
+</CONFIG>

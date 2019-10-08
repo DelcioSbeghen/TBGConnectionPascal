@@ -36,9 +36,9 @@ requires
   dsnap;
 
 contains
-  TBGDBExpressDriver.Model.Conexao in 'source\TBGDBExpressDriver.Model.Conexao.pas',
-  TBGDBExpressDriver.Model.Query in 'source\TBGDBExpressDriver.Model.Query.pas',
-  TBGDBExpressDriver.View.Driver in 'source\TBGDBExpressDriver.View.Driver.pas',
-  TBGDBExpressDriver.Model.DataSet in 'source\TBGDBExpressDriver.Model.DataSet.pas';
+  TBGDBExpressDriver.Model.Conexao in '..\..\source\TBGDBExpressDriver.Model.Conexao.pas',
+  TBGDBExpressDriver.Model.Query in '..\..\source\TBGDBExpressDriver.Model.Query.pas',
+  TBGDBExpressDriver.View.Driver in '..\..\source\TBGDBExpressDriver.View.Driver.pas',
+  TBGDBExpressDriver.Model.DataSet in '..\..\source\TBGDBExpressDriver.Model.DataSet.pas';
 
 end.

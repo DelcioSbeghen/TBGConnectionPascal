@@ -2,9 +2,24 @@ unit TBGRestDWDriver.View.Driver;
 
 interface
 
+{$ifdef FPC}
+  {Necessário para uso do package rtl-generics:->  Generics.Collections}
+  {$MODE DELPHI}{$H+}
+{$endif}
+
 uses
-  TBGConnection.Model.Interfaces, System.Classes, TBGConnection.Model.Conexao.Parametros,
-  System.Generics.Collections, uRESTDWPoolerDB,
+  {$ifndef FPC}
+  System.Classes,
+  System.SysUtils,
+  System.Generics.Collections,
+  {$else}
+  Classes,
+  SysUtils,
+  Generics.Collections,
+  {$endif}
+  uRESTDWPoolerDB,
+  TBGConnection.Model.Interfaces,
+  TBGConnection.Model.Conexao.Parametros,
   TBGConnection.Model.DataSet.Interfaces;
 
 Type
@@ -39,13 +54,15 @@ Type
       property LimitCache : Integer read GetLimitCache write SetLimitCache;
     end;
 
+{$ifndef FPC}
 procedure Register;
+{$endif}
 
 implementation
 
 
 uses
-  System.SysUtils, TBGRestDWDriver.Model.Conexao, TBGRestDWDriver.Model.Query,
+  TBGRestDWDriver.Model.Conexao, TBGRestDWDriver.Model.Query,
   TBGConnection.Model.DataSet.Proxy, TBGRestDWDriver.Model.DataSet;
 
 { TBGRestDWDriverConexao }
@@ -144,10 +161,12 @@ begin
   FLimitCacheRegister := Value;
 end;
 
+{$ifndef FPC}
 procedure Register;
 begin
   RegisterComponents('TBGAbstractConnection', [TBGRestDWDriverConexao]);
 end;
+{$endif}
 
 
 end.

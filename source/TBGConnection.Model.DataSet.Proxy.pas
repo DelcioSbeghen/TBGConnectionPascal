@@ -2,8 +2,24 @@ unit TBGConnection.Model.DataSet.Proxy;
 
 interface
 
+{$ifdef FPC}
+  //{Necessário para uso do package rtl-generics:->  Generics.Collections}
+  {$MODE DELPHI}{$H+}
+{$endif}
+
 uses
-  Classes, TBGConnection.Model.Interfaces, System.Generics.Collections, Data.DB,
+  {$ifndef FPC}
+  System.Classes,
+  System.SysUtils,
+  Data.DB,
+  System.Generics.Collections,
+  {$else}
+  Classes,
+  SysUtils,
+  DB,
+  Generics.Collections,
+  {$endif}
+  TBGConnection.Model.Interfaces,
   TBGConnection.Model.DataSet.Interfaces;
 
 Type
@@ -29,7 +45,7 @@ Type
 implementation
 
 uses
-  System.SysUtils, TBGConnection.Model.DataSet.Factory,
+  TBGConnection.Model.DataSet.Factory,
   TBGConnection.Model.DataSet.Observer;
 
 { TTBGConnectionModelProxy }

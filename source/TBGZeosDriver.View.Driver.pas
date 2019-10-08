@@ -2,9 +2,23 @@ unit TBGZeosDriver.View.Driver;
 
 interface
 
+{$ifdef FPC}
+  {Necessário para uso do package rtl-generics:->  Generics.Collections}
+  {$MODE DELPHI}{$H+}
+{$endif}
+
 uses
-  TBGConnection.Model.Interfaces, System.Classes, TBGConnection.Model.Conexao.Parametros,
-  System.Generics.Collections, ZConnection, ZDataSet,
+  {$ifndef FPC}
+  System.Classes,
+  System.SysUtils,
+  System.Generics.Collections,
+  {$else}
+  Classes,
+  SysUtils,
+  Generics.Collections,
+  {$endif}
+  ZConnection, ZDataSet,
+  TBGConnection.Model.Interfaces, TBGConnection.Model.Conexao.Parametros,
   TBGConnection.Model.DataSet.Interfaces;
 
 Type
@@ -40,12 +54,14 @@ Type
       property LimitCache : Integer read GetLimitCache write SetLimitCache;
   end;
 
+{$ifndef FPC}
 procedure Register;
+{$endif}
 
 implementation
 
 uses
-  System.SysUtils, TBGZeosDriver.Model.Conexao, TBGZeosDriver.Model.Query,
+  TBGZeosDriver.Model.Conexao, TBGZeosDriver.Model.Query,
   TBGConnection.Model.DataSet.Proxy, TBGZeosDriver.Model.DataSet;
 
 { TBGZeosDriverConexao }
@@ -145,9 +161,11 @@ begin
   FLimitCacheRegister := Value;
 end;
 
+{$ifndef FPC}
 procedure Register;
 begin
   RegisterComponents('TBGAbstractConnection', [TBGZeosDriverConexao]);
 end;
+{$endif}
 
 end.

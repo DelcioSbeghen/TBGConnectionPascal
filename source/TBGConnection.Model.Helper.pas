@@ -2,16 +2,30 @@ unit TBGConnection.Model.Helper;
 
 interface
 
+{$ifdef FPC}
+ {$MODESWITCH ADVANCEDRECORDS}
+ {$MODESWITCH TYPEHELPERS}
+{$ENDIF}
+
 type
 
+  {$ifndef FPC}
   THelperString = record helper for String
+  {$else}
+  THelperString = type helper for String
+  {$endif}
     function ToExtractTableName : String;
   end;
 
 implementation
 
 uses
-  System.SysUtils;
+  {$ifndef FPC}
+  System.SysUtils
+  {$else}
+  SysUtils
+  {$endif}
+  ;
 
 { THelperString }
 

@@ -15,9 +15,6 @@
         <Projects Include="TBGZeosDriver.dproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="TBGUniDacDriver.dproj">
-            <Dependencies/>
-        </Projects>
         <Projects Include="TBGQuery.dproj">
             <Dependencies/>
         </Projects>
@@ -28,6 +25,9 @@
             <Dependencies/>
         </Projects>
         <Projects Include="TBGInterbaseExpressDriver.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="TBGUniDacDriver.dproj">
             <Dependencies/>
         </Projects>
     </ItemGroup>
@@ -74,15 +74,6 @@
     <Target Name="TBGZeosDriver:Make">
         <MSBuild Projects="TBGZeosDriver.dproj" Targets="Make"/>
     </Target>
-    <Target Name="TBGUniDacDriver">
-        <MSBuild Projects="TBGUniDacDriver.dproj"/>
-    </Target>
-    <Target Name="TBGUniDacDriver:Clean">
-        <MSBuild Projects="TBGUniDacDriver.dproj" Targets="Clean"/>
-    </Target>
-    <Target Name="TBGUniDacDriver:Make">
-        <MSBuild Projects="TBGUniDacDriver.dproj" Targets="Make"/>
-    </Target>
     <Target Name="TBGQuery">
         <MSBuild Projects="TBGQuery.dproj"/>
     </Target>
@@ -119,14 +110,23 @@
     <Target Name="TBGInterbaseExpressDriver:Make">
         <MSBuild Projects="TBGInterbaseExpressDriver.dproj" Targets="Make"/>
     </Target>
+    <Target Name="TBGUniDacDriver">
+        <MSBuild Projects="TBGUniDacDriver.dproj"/>
+    </Target>
+    <Target Name="TBGUniDacDriver:Clean">
+        <MSBuild Projects="TBGUniDacDriver.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TBGUniDacDriver:Make">
+        <MSBuild Projects="TBGUniDacDriver.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="TBGConnection;TBGFiredacDriver;TBGDBExpressDriver;TBGZeosDriver;TBGUniDacDriver;TBGQuery;TBGRestDWDriver;TBGFirebaseConnection;TBGInterbaseExpressDriver"/>
+        <CallTarget Targets="TBGConnection;TBGFiredacDriver;TBGDBExpressDriver;TBGZeosDriver;TBGQuery;TBGRestDWDriver;TBGFirebaseConnection;TBGInterbaseExpressDriver;TBGUniDacDriver"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="TBGConnection:Clean;TBGFiredacDriver:Clean;TBGDBExpressDriver:Clean;TBGZeosDriver:Clean;TBGUniDacDriver:Clean;TBGQuery:Clean;TBGRestDWDriver:Clean;TBGFirebaseConnection:Clean;TBGInterbaseExpressDriver:Clean"/>
+        <CallTarget Targets="TBGConnection:Clean;TBGFiredacDriver:Clean;TBGDBExpressDriver:Clean;TBGZeosDriver:Clean;TBGQuery:Clean;TBGRestDWDriver:Clean;TBGFirebaseConnection:Clean;TBGInterbaseExpressDriver:Clean;TBGUniDacDriver:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="TBGConnection:Make;TBGFiredacDriver:Make;TBGDBExpressDriver:Make;TBGZeosDriver:Make;TBGUniDacDriver:Make;TBGQuery:Make;TBGRestDWDriver:Make;TBGFirebaseConnection:Make;TBGInterbaseExpressDriver:Make"/>
+        <CallTarget Targets="TBGConnection:Make;TBGFiredacDriver:Make;TBGDBExpressDriver:Make;TBGZeosDriver:Make;TBGQuery:Make;TBGRestDWDriver:Make;TBGFirebaseConnection:Make;TBGInterbaseExpressDriver:Make;TBGUniDacDriver:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

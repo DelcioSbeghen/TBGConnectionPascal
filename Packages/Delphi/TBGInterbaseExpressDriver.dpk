@@ -34,9 +34,9 @@ requires
   ibxpress;
 
 contains
-  TBGInterbaseExpressDriver.Model.Conexao in 'source\TBGInterbaseExpressDriver.Model.Conexao.pas',
-  TBGInterbaseExpressDriver.Model.DataSet in 'source\TBGInterbaseExpressDriver.Model.DataSet.pas',
-  TBGInterbaseExpressDriver.Model.Query in 'source\TBGInterbaseExpressDriver.Model.Query.pas',
-  TBGInterbaseExpressDriver.View.Driver in 'source\TBGInterbaseExpressDriver.View.Driver.pas';
+  TBGInterbaseExpressDriver.Model.Conexao in '..\..\source\TBGInterbaseExpressDriver.Model.Conexao.pas',
+  TBGInterbaseExpressDriver.Model.DataSet in '..\..\source\TBGInterbaseExpressDriver.Model.DataSet.pas',
+  TBGInterbaseExpressDriver.Model.Query in '..\..\source\TBGInterbaseExpressDriver.Model.Query.pas',
+  TBGInterbaseExpressDriver.View.Driver in '..\..\source\TBGInterbaseExpressDriver.View.Driver.pas';
 
 end.

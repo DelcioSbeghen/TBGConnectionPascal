@@ -35,9 +35,9 @@ requires
   TBGConnection;
 
 contains
-  TBGUnidacDriver.Model.Conexao in 'source\TBGUnidacDriver.Model.Conexao.pas',
-  TBGUnidacDriver.Model.Query in 'source\TBGUnidacDriver.Model.Query.pas',
-  TBGUnidacDriver.View.Driver in 'source\TBGUnidacDriver.View.Driver.pas',
-  TBGUnidacDriver.Model.DataSet in 'source\TBGUnidacDriver.Model.DataSet.pas';
+  TBGUnidacDriver.Model.Conexao in '..\..\source\TBGUnidacDriver.Model.Conexao.pas',
+  TBGUnidacDriver.Model.Query in '..\..\source\TBGUnidacDriver.Model.Query.pas',
+  TBGUnidacDriver.View.Driver in '..\..\source\TBGUnidacDriver.View.Driver.pas',
+  TBGUnidacDriver.Model.DataSet in '..\..\source\TBGUnidacDriver.Model.DataSet.pas';
 
 end.

@@ -3,8 +3,12 @@ unit TBGQuery.View.Principal;
 interface
 
 uses
-  TBGConnection.Model.Interfaces, TBGConnection.View.Interfaces,
-  System.Classes, Data.DB;
+  {$ifndef FPC}
+  System.Classes, Data.DB,
+  {$else}
+  Classes, DB,
+  {$endif}
+  TBGConnection.Model.Interfaces, TBGConnection.View.Interfaces;
 
 Type
   TTBGQuery = class(TComponent, iQuery)
@@ -25,7 +29,9 @@ Type
     property DataSource: TDataSource read FDataSource write SetDataSource;
   end;
 
+{$ifndef FPC}
 procedure Register;
+{$endif}
 
 implementation
 
@@ -66,9 +72,11 @@ begin
   FDataSource := Value;
 end;
 
+{$ifndef FPC}
 procedure Register;
 begin
   RegisterComponents('TBGAbstractConnection', [TTBGQuery]);
 end;
+{$endif}
 
 end.

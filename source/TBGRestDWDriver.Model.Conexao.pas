@@ -3,8 +3,17 @@
 interface
 
 uses
-  TBGConnection.Model.Interfaces, System.Classes, Data.DB,
-  uRESTDWPoolerDB, System.SysUtils,
+  {$ifndef FPC}
+  System.Classes,
+  Data.DB,
+  System.SysUtils,
+  {$else}
+  Classes,
+  DB,
+  SysUtils,
+  {$endif}
+  uRESTDWPoolerDB,
+  TBGConnection.Model.Interfaces,
   TBGConnection.Model.DataSet.Interfaces;
 
 Type
