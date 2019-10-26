@@ -1,4 +1,4 @@
-unit TBGRestDWDriver.View.Driver;
+﻿unit TBGRestDWDriver.View.Driver;
 
 interface
 
@@ -23,6 +23,9 @@ uses
   TBGConnection.Model.DataSet.Interfaces;
 
 Type
+
+  { TBGRestDWDriverConexao }
+
   TBGRestDWDriverConexao = class(TComponent, iDriver)
   private
     FFConnection: TRestDWDataBase;
@@ -35,24 +38,25 @@ Type
     procedure SetFQuery(const Value: TRESTDWClientSQL);
     function GetLimitCache: Integer;
     procedure SetLimitCache(const Value: Integer);
-    protected
-      FParametros : iConexaoParametros;
-      function Conexao : iConexao;
-      function Query : iQuery;
-      function LimitCacheRegister(Value : Integer) : iDriver;
-      function Cache : iDriverProxy;
-      function DataSet : iDataSet;
-    public
-      constructor Create;
-      destructor Destroy; override;
-      class function New : iDriver;
-      function Conectar : iConexao;
-      function &End: TComponent;
-      function Parametros: iConexaoParametros;
-    published
-      property FConnection : TRestDWDataBase read FFConnection write SetFConnection;
-      property LimitCache : Integer read GetLimitCache write SetLimitCache;
-    end;
+  protected
+    FParametros : iConexaoParametros;
+    function Conexao : iConexao;
+    function Query : iQuery;
+    function LimitCacheRegister(Value : Integer) : iDriver;
+    function Cache : iDriverProxy;
+    function DataSet : iDataSet;
+  public
+    constructor Create;
+    destructor Destroy; override;
+    class function New : iDriver;
+    function ThisAs: TObject;
+    function Conectar : iConexao;
+    function &End: TComponent;
+    function Parametros: iConexaoParametros;
+  published
+    property FConnection : TRestDWDataBase read FFConnection write SetFConnection;
+    property LimitCache : Integer read GetLimitCache write SetLimitCache;
+  end;
 
 {$ifndef FPC}
 procedure Register;
@@ -126,6 +130,11 @@ end;
 class function TBGRestDWDriverConexao.New: iDriver;
 begin
   Result := Self.Create;
+end;
+
+function TBGRestDWDriverConexao.ThisAs: TObject;
+begin
+  Result := Self;
 end;
 
 function TBGRestDWDriverConexao.Parametros: iConexaoParametros;

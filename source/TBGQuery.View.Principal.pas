@@ -11,6 +11,9 @@ uses
   TBGConnection.Model.Interfaces, TBGConnection.View.Interfaces;
 
 Type
+
+  { TTBGQuery }
+
   TTBGQuery = class(TComponent, iQuery)
   private
     FQuery : iQuery;
@@ -20,9 +23,10 @@ Type
     function GetQuery: iQuery;
     procedure SetDataSource(const Value: TDataSource);
   public
-    constructor Create;
+    constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
     class function New: iQuery;
+    function ThisAs: TObject;
     property Query: iQuery read GetQuery implements iQuery;
   published
     property Connection: iTBGConnection read FConnection write SetConnection;
@@ -37,15 +41,15 @@ implementation
 
 { TTBGQuery }
 
-constructor TTBGQuery.Create;
+constructor TTBGQuery.Create(AOwner: TComponent);
 begin
-
+  inherited Create(AOwner);
 end;
 
 destructor TTBGQuery.Destroy;
 begin
 
-  inherited;
+  inherited Destroy;
 end;
 
 function TTBGQuery.GetQuery: iQuery;
@@ -59,7 +63,12 @@ end;
 
 class function TTBGQuery.New: iQuery;
 begin
-  Result := Self.Create;
+  Result := Self.Create(nil);
+end;
+
+function TTBGQuery.ThisAs: TObject;
+begin
+  Result := Self;
 end;
 
 procedure TTBGQuery.SetConnection(const Value: iTBGConnection);

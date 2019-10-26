@@ -30,6 +30,7 @@ Type
       constructor Create(Conexao : TSQLConnection; Driver : iDriver);
       destructor Destroy; override;
       class function New(Conexao : TSQLConnection; Driver : iDriver) : iQuery;
+      function ThisAs: TObject;
       //iQuery
       function Open(aSQL: String): iQuery;
       function ExecSQL(aSQL : String) : iQuery; overload;
@@ -166,7 +167,34 @@ begin
 end;
 
 destructor TDBExpressModelQuery.Destroy;
+var
+  vProvider: TDataSetProvider;
+  vClient: TClientDataSet;
+  vQuery: TSQLQuery;
 begin
+  if Assigned(DataSetProvider1) then
+  begin
+    for vProvider in DataSetProvider1 do
+    begin
+      vProvider.Free;
+    end;
+  end;
+  if Assigned(ClientDataSet1) then
+  begin
+    for vClient in ClientDataSet1 do
+    begin
+      vClient.Close;
+      vClient.Free;
+    end;
+  end;
+  if Assigned(FQuery) then
+  begin
+    for vQuery in FQuery do
+    begin
+      vQuery.Close;
+      vQuery.Free;
+    end;
+  end;
   FreeAndNil(DataSetProvider1);
   FreeAndNil(ClientDataSet1);
   FreeAndNil(FQuery);
@@ -227,6 +255,11 @@ function TDBExpressModelQuery.Tag(Value: Integer): iQuery;
 begin
   Result := Self;
   GetQuery.Tag := Value;
+end;
+
+function TDBExpressModelQuery.ThisAs: TObject;
+begin
+  Result := Self;
 end;
 
 function TDBExpressModelQuery.UpdateTableName(Tabela: String): iQuery;

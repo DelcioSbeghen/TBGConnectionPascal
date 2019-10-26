@@ -23,44 +23,48 @@ uses
   TBGConnection.Model.DataSet.Observer, TBGConnection.Model.DataSet.Factory;
 
 Type
+
+  { TZeosModelQuery }
+
   TZeosModelQuery = class(TInterfacedObject, iQuery)
-    private
-      FSQL : String;
-      FKey : Integer;
-      FConexao : TZConnection;
-      FDriver : iDriver;
-      FiConexao : iConexao;
-      FQuery : TList<TZQuery>;
-      FDataSource : TDataSource;
-      FDataSet : TDictionary<integer, iDataSet>;
-      FChangeDataSet : TChangeDataSet;
-      FParams : TParams;
-      procedure InstanciaQuery;
-      function GetDataSet : iDataSet;
-      function GetQuery : TZQuery;
-    public
-      constructor Create(Conexao : TZConnection; Driver : iDriver);
-      destructor Destroy; override;
-      class function New(Conexao : TZConnection; Driver : iDriver) : iQuery;
-      //iObserver
-      procedure ApplyUpdates(DataSet : TDataSet);
-      //iQuery
-      function Open(aSQL: String): iQuery;
-      function ExecSQL(aSQL : String) : iQuery; overload;
-      function DataSet : TDataSet; overload;
-      function DataSet(Value : TDataSet) : iQuery; overload;
-      function DataSource(Value : TDataSource) : iQuery;
-      function Fields : TFields;
-      function ChangeDataSet(Value : TChangeDataSet) : iQuery;
-      function &End: TComponent;
-      function Tag(Value : Integer) : iQuery;
-      function LocalSQL(Value : TComponent) : iQuery;
-      function Close : iQuery;
-      function SQL : TStrings;
-      function Params : TParams;
-      function ParamByName(Value : String) : TParam;
-      function ExecSQL : iQuery; overload;
-      function UpdateTableName(Tabela : String) : iQuery;
+  private
+    FSQL : String;
+    FKey : Integer;
+    FConexao : TZConnection;
+    FDriver : iDriver;
+    FiConexao : iConexao;
+    FQuery : TList<TZQuery>;
+    FDataSource : TDataSource;
+    FDataSet : TDictionary<integer, iDataSet>;
+    FChangeDataSet : TChangeDataSet;
+    FParams : TParams;
+    procedure InstanciaQuery;
+    function GetDataSet : iDataSet;
+    function GetQuery : TZQuery;
+  public
+    constructor Create(Conexao : TZConnection; Driver : iDriver);
+    destructor Destroy; override;
+    class function New(Conexao : TZConnection; Driver : iDriver) : iQuery;
+    function ThisAs: TObject;
+    //iObserver
+    procedure ApplyUpdates(DataSet : TDataSet);
+    //iQuery
+    function Open(aSQL: String): iQuery;
+    function ExecSQL(aSQL : String) : iQuery; overload;
+    function DataSet : TDataSet; overload;
+    function DataSet(Value : TDataSet) : iQuery; overload;
+    function DataSource(Value : TDataSource) : iQuery;
+    function Fields : TFields;
+    function ChangeDataSet(Value : TChangeDataSet) : iQuery;
+    function &End: TComponent;
+    function Tag(Value : Integer) : iQuery;
+    function LocalSQL(Value : TComponent) : iQuery;
+    function Close : iQuery;
+    function SQL : TStrings;
+    function Params : TParams;
+    function ParamByName(Value : String) : TParam;
+    function ExecSQL : iQuery; overload;
+    function UpdateTableName(Tabela : String) : iQuery;
   end;
 
 implementation
@@ -165,7 +169,17 @@ begin
 end;
 
 destructor TZeosModelQuery.Destroy;
+var
+  vQuery: TZQuery;
 begin
+  if Assigned(FQuery) then
+  begin
+    for vQuery in FQuery do
+    begin
+      vQuery.Close;
+      vQuery.Free;
+    end;
+  end;
   FreeAndNil(FQuery);
   FreeAndNil(FDataSet);
   inherited;
@@ -174,6 +188,11 @@ end;
 class function TZeosModelQuery.New(Conexao : TZConnection; Driver : iDriver) : iQuery;
 begin
   Result := Self.Create(Conexao, Driver);
+end;
+
+function TZeosModelQuery.ThisAs: TObject;
+begin
+  Result := Self;
 end;
 
 function TZeosModelQuery.Open(aSQL: String): iQuery;

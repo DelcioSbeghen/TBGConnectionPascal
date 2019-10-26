@@ -10,6 +10,9 @@ uses
   TBGConnection.Model.Interfaces;
 
 Type
+
+  { TModelConexaoParametros }
+
   TModelConexaoParametros = class(TInterfacedObject, iConexaoParametros)
   private
     FConexao: iConexao;
@@ -23,22 +26,47 @@ Type
     constructor Create(Conexao: iConexao);
     destructor Destroy; override;
     class function New(Conexao: iConexao): iConexaoParametros;
+    function ThisAs: TObject;
     function Database(Value: String): iConexaoParametros;
     function UserName(Value: String): iConexaoParametros;
     function Password(Value: String): iConexaoParametros;
     function DriverID(Value: String): iConexaoParametros;
     function Server(Value: String): iConexaoParametros;
     function Porta(Value: Integer): iConexaoParametros;
-    function GetDatabase(Value: String): String;
-    function GetUserName(Value: String): String;
-    function GetPassword(Value: String): String;
-    function GetDriverID(Value: String): String;
-    function GetServer(Value: String): String;
-    function GetPorta(Value: Integer): Integer;
+    function GetDatabase: String;
+    function GetUserName: String;
+    function GetPassword: String;
+    function GetDriverID: String;
+    function GetServer: String;
+    function GetPorta: Integer;
     function &End: iConexao;
   end;
 
+  { TModelConexaoParametrosZeos }
+
+  TModelConexaoParametrosZeos = class(TModelConexaoParametros, iConexaoParametrosZeos)
+  strict private
+    FProtocol: String;
+  public
+    function Protocol(Value: String): iConexaoParametrosZeos;
+    function GetProtocol: String;
+  end;
+
 implementation
+
+{ TModelConexaoParametrosZeos }
+
+function TModelConexaoParametrosZeos.Protocol(Value: String
+  ): iConexaoParametrosZeos;
+begin
+  Result := Self;
+  FProtocol := Value;
+end;
+
+function TModelConexaoParametrosZeos.GetProtocol: String;
+begin
+  Result := FProtocol;
+end;
 
 { TModelConexaoParametros }
 
@@ -70,32 +98,32 @@ begin
   FDriverID := Value;
 end;
 
-function TModelConexaoParametros.GetDatabase(Value: String): String;
+function TModelConexaoParametros.GetDatabase: String;
 begin
   Result := FDatabase;
 end;
 
-function TModelConexaoParametros.GetDriverID(Value: String): String;
+function TModelConexaoParametros.GetDriverID: String;
 begin
   Result := FDriverID;
 end;
 
-function TModelConexaoParametros.GetPassword(Value: String): String;
+function TModelConexaoParametros.GetPassword: String;
 begin
   Result := FPassword;
 end;
 
-function TModelConexaoParametros.GetPorta(Value: Integer): Integer;
+function TModelConexaoParametros.GetPorta: Integer;
 begin
   Result := FPorta;
 end;
 
-function TModelConexaoParametros.GetServer(Value: String): String;
+function TModelConexaoParametros.GetServer: String;
 begin
   Result := FServer;
 end;
 
-function TModelConexaoParametros.GetUserName(Value: String): String;
+function TModelConexaoParametros.GetUserName: String;
 begin
   Result := FUserName;
 end;
@@ -104,6 +132,11 @@ class function TModelConexaoParametros.New(Conexao: iConexao)
   : iConexaoParametros;
 begin
   Result := Self.Create(Conexao);
+end;
+
+function TModelConexaoParametros.ThisAs: TObject;
+begin
+  Result := Self;
 end;
 
 function TModelConexaoParametros.Password(Value: String): iConexaoParametros;

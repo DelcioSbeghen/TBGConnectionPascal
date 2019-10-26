@@ -10,6 +10,7 @@ interface
 uses
   TBGConnection.Model.Interfaces, TBGConnection.View.Interfaces, 
   TBGConnection.View.Principal, TBGConnection.Model.Conexao.Parametros, 
+  TBGConnection.Model.Conexao.Parametros.RestDW, 
   TBGConnection.Model.DataSet.Proxy, TBGConnection.Model.DataSet.Observer, 
   TBGConnection.Model.DataSet.Factory, TBGConnection.Model.DataSet.Interfaces, 
   TBGConnection.Model.Helper, TBGConnectionReg, LazarusPackageIntf;

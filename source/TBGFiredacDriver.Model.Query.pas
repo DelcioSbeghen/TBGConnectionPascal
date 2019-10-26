@@ -10,43 +10,44 @@ uses
 
 Type
   TFiredacModelQuery = class(TInterfacedObject, iQuery)
-    private
-      FSQL : String;
-      FKey : Integer;
-      FConexao : TFDConnection;
-      FDriver : iDriver;
-      FQuery : TList<TFDQuery>;
-      FDataSource : TDataSource;
-      FDataSet : TDictionary<integer, iDataSet>;
-      FChangeDataSet : TChangeDataSet;
-      FParams : TParams;
-      procedure InstanciaQuery;
-      function GetDataSet : iDataSet;
-      function GetQuery : TFDQuery;
-      procedure SetQuery(Value : TFDQuery);
-    public
-      constructor Create(Conexao : TFDConnection; Driver : iDriver);
-      destructor Destroy; override;
-      class function New(Conexao : TFDConnection; Driver : iDriver) : iQuery;
-      //iObserver
-      procedure ApplyUpdates(DataSet : TDataSet);
-      //iQuery
-      function Open(aSQL: String): iQuery;
-      function ExecSQL(aSQL : String) : iQuery; overload;
-      function DataSet : TDataSet; overload;
-      function DataSet(Value : TDataSet) : iQuery; overload;
-      function DataSource(Value : TDataSource) : iQuery;
-      function Fields : TFields;
-      function ChangeDataSet(Value : TChangeDataSet) : iQuery;
-      function &End: TComponent;
-      function Tag(Value : Integer) : iQuery;
-      function LocalSQL(Value : TComponent) : iQuery;
-      function Close : iQuery;
-      function SQL : TStrings;
-      function Params : TParams;
-      function ParamByName(Value : String) : TParam;
-      function ExecSQL : iQuery; overload;
-      function UpdateTableName(Tabela : String) : iQuery;
+  private
+    FSQL : String;
+    FKey : Integer;
+    FConexao : TFDConnection;
+    FDriver : iDriver;
+    FQuery : TList<TFDQuery>;
+    FDataSource : TDataSource;
+    FDataSet : TDictionary<integer, iDataSet>;
+    FChangeDataSet : TChangeDataSet;
+    FParams : TParams;
+    procedure InstanciaQuery;
+    function GetDataSet : iDataSet;
+    function GetQuery : TFDQuery;
+    procedure SetQuery(Value : TFDQuery);
+  public
+    constructor Create(Conexao : TFDConnection; Driver : iDriver);
+    destructor Destroy; override;
+    class function New(Conexao : TFDConnection; Driver : iDriver) : iQuery;
+    function ThisAs: TObject;
+    //iObserver
+    procedure ApplyUpdates(DataSet : TDataSet);
+    //iQuery
+    function Open(aSQL: String): iQuery;
+    function ExecSQL(aSQL : String) : iQuery; overload;
+    function DataSet : TDataSet; overload;
+    function DataSet(Value : TDataSet) : iQuery; overload;
+    function DataSource(Value : TDataSource) : iQuery;
+    function Fields : TFields;
+    function ChangeDataSet(Value : TChangeDataSet) : iQuery;
+    function &End: TComponent;
+    function Tag(Value : Integer) : iQuery;
+    function LocalSQL(Value : TComponent) : iQuery;
+    function Close : iQuery;
+    function SQL : TStrings;
+    function Params : TParams;
+    function ParamByName(Value : String) : TParam;
+    function ExecSQL : iQuery; overload;
+    function UpdateTableName(Tabela : String) : iQuery;
   end;
 
 implementation
@@ -155,7 +156,17 @@ begin
 end;
 
 destructor TFiredacModelQuery.Destroy;
+var
+  vQuery: TFDQuery;
 begin
+  if Assigned(FQuery) then
+  begin
+    for vQuery in FQuery do
+    begin
+      vQuery.Close;
+      vQuery.Free;
+    end;
+  end;
   FreeAndNil(FQuery);
   FreeAndNil(FDataSet);
   inherited;
@@ -217,6 +228,11 @@ function TFiredacModelQuery.Tag(Value: Integer): iQuery;
 begin
   Result := Self;
   GetQuery.Tag := Value;
+end;
+
+function TFiredacModelQuery.ThisAs: TObject;
+begin
+  Result := Self;
 end;
 
 function TFiredacModelQuery.UpdateTableName(Tabela: String): iQuery;

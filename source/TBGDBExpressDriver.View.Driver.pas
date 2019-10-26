@@ -20,23 +20,24 @@ Type
     procedure SetFQuery(const Value: TSQLQuery);
     function GetLimitCache: Integer;
     procedure SetLimitCache(const Value: Integer);
-    protected
-      FParametros : iConexaoParametros;
-      function Conexao : iConexao;
-      function Query : iQuery;
-      function Cache : iDriverProxy;
-      function DataSet : iDataSet;
-    public
-      constructor Create;
-      destructor Destroy; override;
-      class function New : iDriver;
-      function Conectar : iConexao;
-      function &End: TComponent;
-      function Parametros: iConexaoParametros;
-      function LimitCacheRegister(Value : Integer) : iDriver;
-    published
-      property FConnection : TSQLConnection read FFConnection write SetFConnection;
-      property LimitCache : Integer read GetLimitCache write SetLimitCache;
+  protected
+    FParametros : iConexaoParametros;
+    function Conexao : iConexao;
+    function Query : iQuery;
+    function Cache : iDriverProxy;
+    function DataSet : iDataSet;
+  public
+    constructor Create;
+    destructor Destroy; override;
+    class function New : iDriver;
+    function ThisAs: TObject;
+    function Conectar : iConexao;
+    function &End: TComponent;
+    function Parametros: iConexaoParametros;
+    function LimitCacheRegister(Value : Integer) : iDriver;
+  published
+    property FConnection : TSQLConnection read FFConnection write SetFConnection;
+    property LimitCache : Integer read GetLimitCache write SetLimitCache;
   end;
 
 procedure Register;
@@ -142,6 +143,11 @@ end;
 procedure TBGDBExpressDriverConexao.SetLimitCache(const Value: Integer);
 begin
   FLimitCacheRegister := Value;
+end;
+
+function TBGDBExpressDriverConexao.ThisAs: TObject;
+begin
+  Result := Self;
 end;
 
 procedure Register;

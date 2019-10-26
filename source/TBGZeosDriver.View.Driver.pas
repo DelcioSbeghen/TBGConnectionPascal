@@ -1,4 +1,4 @@
-unit TBGZeosDriver.View.Driver;
+﻿unit TBGZeosDriver.View.Driver;
 
 interface
 
@@ -22,6 +22,9 @@ uses
   TBGConnection.Model.DataSet.Interfaces;
 
 Type
+
+  { TBGZeosDriverConexao }
+
   TBGZeosDriverConexao = class(TComponent, iDriver)
   private
     FFConnection: TZConnection;
@@ -35,23 +38,24 @@ Type
     procedure SetFQuery(const Value: TZQuery);
     procedure SetLimitCache(const Value: Integer);
     function GetLimitCache: Integer;
-    protected
-      FParametros : iConexaoParametros;
-      function Conexao : iConexao;
-      function Query : iQuery;
-      function DataSet : iDataSet;
-      function Cache : iDriverProxy;
-    public
-      constructor Create;
-      destructor Destroy; override;
-      class function New : iDriver;
-      function Conectar : iConexao;
-      function &End: TComponent;
-      function Parametros: iConexaoParametros;
-      function LimitCacheRegister(Value : Integer) : iDriver;
-    published
-      property FConnection : TZConnection read FFConnection write SetFConnection;
-      property LimitCache : Integer read GetLimitCache write SetLimitCache;
+  protected
+    FParametros : iConexaoParametros;
+    function Conexao : iConexao;
+    function Query : iQuery;
+    function DataSet : iDataSet;
+    function Cache : iDriverProxy;
+  public
+    constructor Create;
+    destructor Destroy; override;
+    class function New : iDriver;
+    function ThisAs: TObject;
+    function Conectar : iConexao;
+    function &End: TComponent;
+    function Parametros: iConexaoParametros;
+    function LimitCacheRegister(Value : Integer) : iDriver;
+  published
+    property FConnection : TZConnection read FFConnection write SetFConnection;
+    property LimitCache : Integer read GetLimitCache write SetLimitCache;
   end;
 
 {$ifndef FPC}
@@ -126,6 +130,11 @@ end;
 class function TBGZeosDriverConexao.New: iDriver;
 begin
   Result := Self.Create;
+end;
+
+function TBGZeosDriverConexao.ThisAs: TObject;
+begin
+  Result := Self;
 end;
 
 function TBGZeosDriverConexao.Parametros: iConexaoParametros;

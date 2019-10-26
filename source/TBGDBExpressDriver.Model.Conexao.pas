@@ -17,6 +17,7 @@ Type
       constructor Create(Connection : TSQLConnection; LimitCacheRegister : Integer; Driver : iDriver);
       destructor Destroy; override;
       class function New(Connection : TSQLConnection; LimitCacheRegister : Integer; Driver : iDriver) : iConexao;
+      function ThisAs: TObject;
       //iConexao
       function Conectar : iConexao;
       function &End: TComponent;
@@ -82,6 +83,11 @@ function TDBExpressDriverModelConexao.StartTransaction: iConexao;
 begin
   Result := Self;
   FTrans := FConnection.BeginTransaction;
+end;
+
+function TDBExpressDriverModelConexao.ThisAs: TObject;
+begin
+  Result := Self;
 end;
 
 end.

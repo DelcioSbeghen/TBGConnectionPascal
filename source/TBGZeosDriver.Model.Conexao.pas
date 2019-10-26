@@ -13,21 +13,24 @@ uses
   TBGConnection.Model.DataSet.Interfaces;
 
 Type
+
+  { TZeosDriverModelConexao }
+
   TZeosDriverModelConexao = class(TInterfacedObject, iConexao)
-    private
-      FConnection : TZConnection;
-      FDriver : iDriver;
-    public
-      constructor Create(Connection : TZConnection; LimitCacheRegister : Integer; Driver : iDriver);
-      destructor Destroy; override;
-      class function New(Connection : TZConnection; LimitCacheRegister : Integer; Driver : iDriver) : iConexao;
-      //iConexao
-      function Conectar : iConexao;
-      function &End: TComponent;
-      function Connection : TCustomConnection;
-      function StartTransaction : iConexao;
-      function RollbackTransaction : iConexao;
-      function Commit : iConexao;
+  private
+    FConnection : TZConnection;
+    FDriver : iDriver;
+  public
+    constructor Create(Connection : TZConnection; LimitCacheRegister : Integer; Driver : iDriver);
+    destructor Destroy; override;
+    class function New(Connection : TZConnection; LimitCacheRegister : Integer; Driver : iDriver) : iConexao;
+    function ThisAs: TObject;
+    function Conectar : iConexao;
+    function &End: TComponent;
+    function Connection : TCustomConnection;
+    function StartTransaction : iConexao;
+    function RollbackTransaction : iConexao;
+    function Commit : iConexao;
   end;
 
 implementation
@@ -74,6 +77,11 @@ end;
 class function TZeosDriverModelConexao.New(Connection : TZConnection; LimitCacheRegister : Integer; Driver : iDriver) : iConexao;
 begin
   Result := Self.Create(Connection, LimitCacheRegister, Driver);
+end;
+
+function TZeosDriverModelConexao.ThisAs: TObject;
+begin
+  Result := Self;
 end;
 
 function TZeosDriverModelConexao.RollbackTransaction: iConexao;

@@ -17,6 +17,9 @@ uses
   TBGConnection.Model.DataSet.Interfaces;
 
 Type
+
+  { TRestDWDriverModelConexao }
+
   TRestDWDriverModelConexao = class(TInterfacedObject, iConexao)
     private
       FConnection : TRESTDWDataBase;
@@ -25,6 +28,7 @@ Type
       constructor Create(Connection : TRestDWDataBase; LimitCacheRegister : Integer; Driver : iDriver);
       destructor Destroy; override;
       class function New(Connection : TRestDWDataBase; LimitCacheRegister : Integer; Driver : iDriver) : iConexao;
+      function ThisAs: TObject;
       //iConexao
       function Conectar : iConexao;
       function &End: TComponent;
@@ -78,6 +82,11 @@ end;
 class function TRestDWDriverModelConexao.New(Connection : TRestDWDataBase; LimitCacheRegister : Integer; Driver : iDriver) : iConexao;
 begin
   Result := Self.Create(Connection, LimitCacheRegister, Driver);
+end;
+
+function TRestDWDriverModelConexao.ThisAs: TObject;
+begin
+  Result := Self;
 end;
 
 function TRestDWDriverModelConexao.RollbackTransaction: iConexao;

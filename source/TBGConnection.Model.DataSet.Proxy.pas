@@ -1,4 +1,4 @@
-unit TBGConnection.Model.DataSet.Proxy;
+﻿unit TBGConnection.Model.DataSet.Proxy;
 
 interface
 
@@ -71,6 +71,7 @@ begin
       begin
         Value := FCacheDataSet.Items[Chave];
         Result := true;
+        Break;
       end;
   end;
 

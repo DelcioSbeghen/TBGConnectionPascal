@@ -8,20 +8,21 @@ uses
 
 Type
   TFiredacDriverModelConexao = class(TInterfacedObject, iConexao)
-    private
-      FConnection : TFDConnection;
-      FDriver : iDriver;
-    public
-      constructor Create(Connection : TFDConnection; LimitCacheRegister : Integer; Driver : iDriver);
-      destructor Destroy; override;
-      class function New(Connection : TFDConnection; LimitCacheRegister : Integer; Driver : iDriver) : iConexao;
-      //iConexao
-      function Conectar : iConexao;
-      function &End: TComponent;
-      function Connection : TCustomConnection;
-      function StartTransaction : iConexao;
-      function RollbackTransaction : iConexao;
-      function Commit : iConexao;
+  private
+    FConnection : TFDConnection;
+    FDriver : iDriver;
+  public
+    constructor Create(Connection : TFDConnection; LimitCacheRegister : Integer; Driver : iDriver);
+    destructor Destroy; override;
+    class function New(Connection : TFDConnection; LimitCacheRegister : Integer; Driver : iDriver) : iConexao;
+    function ThisAs: TObject;
+    //iConexao
+    function Conectar : iConexao;
+    function &End: TComponent;
+    function Connection : TCustomConnection;
+    function StartTransaction : iConexao;
+    function RollbackTransaction : iConexao;
+    function Commit : iConexao;
   end;
 
 implementation
@@ -80,6 +81,11 @@ function TFiredacDriverModelConexao.StartTransaction: iConexao;
 begin
   Result := Self;
   FConnection.StartTransaction;
+end;
+
+function TFiredacDriverModelConexao.ThisAs: TObject;
+begin
+  Result := Self;
 end;
 
 end.

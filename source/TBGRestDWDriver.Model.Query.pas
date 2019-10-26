@@ -28,6 +28,9 @@ uses
   TBGConnection.Model.Helper;
 
 Type
+
+  { TRestDWModelQuery }
+
   TRestDWModelQuery = class(TInterfacedObject, iQuery)
   private
     FConexao: TRESTDWDataBase;
@@ -49,6 +52,7 @@ Type
     constructor Create(Conexao: TRESTDWDataBase; Driver : iDriver);
     destructor Destroy; override;
     class function New(Conexao: TRESTDWDataBase; Driver : iDriver): iQuery;
+    function ThisAs: TObject;
     //iObserver
     procedure ApplyUpdates(DataSet : TDataSet);
     // iQuery
@@ -180,7 +184,7 @@ begin
   Result := GetQuery;
 end;
 
-function TRestDWModelQuery.DataSet(Value: Tdataset): iQuery;
+function TRestDWModelQuery.DataSet(Value: TDataset): iQuery;
 begin
   Result := Self;
   GetDataSet.DataSet(TRESTDWClientSQL(Value));
@@ -193,7 +197,17 @@ begin
 end;
 
 destructor TRestDWModelQuery.Destroy;
+var
+  vQuery: TRESTDWClientSQL;
 begin
+  if Assigned(FQuery) then
+  begin
+    for vQuery in FQuery do
+    begin
+      vQuery.Close;
+      vQuery.Free;
+    end;
+  end;
   FreeAndNil(FQuery);
   FreeAndNil(FDataSet);
   inherited;
@@ -202,6 +216,11 @@ end;
 class function TRestDWModelQuery.New(Conexao: TRESTDWDataBase; Driver : iDriver): iQuery;
 begin
   Result := Self.Create(Conexao, Driver);
+end;
+
+function TRestDWModelQuery.ThisAs: TObject;
+begin
+  Result := Self;
 end;
 
 function TRestDWModelQuery.Open(aSQL: String): iQuery;
