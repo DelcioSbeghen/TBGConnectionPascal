@@ -42,8 +42,6 @@ Type
     FDataSet: TDictionary<integer, iDataSet>;
     FChangeDataSet: TChangeDataSet;
     FSQL : String;
-    FGetDataSet: iDataSet;
-    FParams : TParams;
     procedure InstanciaQuery;
     function GetDataSet : iDataSet;
     function GetQuery : TRESTDWClientSQL;
@@ -225,7 +223,6 @@ end;
 
 function TRestDWModelQuery.Open(aSQL: String): iQuery;
 var
-  Query : TRESTDWClientSQL;
   DataSet : iDataSet;
 begin
   Result := Self;

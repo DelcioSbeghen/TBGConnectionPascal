@@ -16,21 +16,21 @@ uses
 
 Type
   TConnectionModelZeosDataSet = class(TInterfacedObject, iDataSet, ICacheDataSetObserver)
-    private
-      FDataSet : TZQuery;
-      FObserver : ICacheDataSetSubject;
-      FGUUID : String;
-      FSQL : String;
-    public
-      constructor Create(Observer : ICacheDataSetSubject);
-      destructor Destroy; override;
-      class function New(Observer : ICacheDataSetSubject) : iDataSet;
-      function DataSet : TDataSet; overload;
-      function DataSet (Value : TDataSet) : iDataSet; overload;
-      function GUUID : String;
-      function SQL : String; overload;
-      function SQL (Value : String) : iDataSet; overload;
-      function Update(Value : String) : ICacheDataSetObserver;
+  private
+    FDataSet : TZQuery;
+    FObserver : ICacheDataSetSubject;
+    FGUUID : String;
+    FSQL : String;
+  public
+    constructor Create(Observer : ICacheDataSetSubject);
+    destructor Destroy; override;
+    class function New(Observer : ICacheDataSetSubject) : iDataSet;
+    function DataSet : TDataSet; overload;
+    function DataSet (Value : TDataSet) : iDataSet; overload;
+    function GUUID : String;
+    function SQL : String; overload;
+    function SQL (Value : String) : iDataSet; overload;
+    function Update(Value : String) : ICacheDataSetObserver;
   end;
 
 implementation

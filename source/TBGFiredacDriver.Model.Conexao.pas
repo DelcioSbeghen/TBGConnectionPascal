@@ -19,7 +19,7 @@ Type
     //iConexao
     function Conectar : iConexao;
     function &End: TComponent;
-    function Connection : TCustomConnection;
+    function Connection : TComponent;
     function StartTransaction : iConexao;
     function RollbackTransaction : iConexao;
     function Commit : iConexao;
@@ -49,7 +49,7 @@ begin
   Result := FConnection;
 end;
 
-function TFiredacDriverModelConexao.Connection: TCustomConnection;
+function TFiredacDriverModelConexao.Connection: TComponent;
 begin
   Result := FConnection;
 end;

@@ -9,7 +9,7 @@ interface
 uses
   Classes, SysUtils,
   TBGConnection.Model.Interfaces,
-  uRESTDWPoolerDB, TBGConnection.Model.Conexao.Parametros;
+  TBGConnection.Model.Conexao.Parametros;
 
 type
 

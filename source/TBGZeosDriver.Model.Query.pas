@@ -32,12 +32,10 @@ Type
     FKey : Integer;
     FConexao : TZConnection;
     FDriver : iDriver;
-    FiConexao : iConexao;
     FQuery : TList<TZQuery>;
     FDataSource : TDataSource;
     FDataSet : TDictionary<integer, iDataSet>;
     FChangeDataSet : TChangeDataSet;
-    FParams : TParams;
     procedure InstanciaQuery;
     function GetDataSet : iDataSet;
     function GetQuery : TZQuery;
@@ -96,6 +94,7 @@ end;
 
 function TZeosModelQuery.ExecSQL(aSQL: String): iQuery;
 begin
+  Result := Self;
   FSQL := aSQL;
   GetQuery.SQL.Clear;
   GetQuery.SQL.Add(FSQL);
@@ -197,7 +196,6 @@ end;
 
 function TZeosModelQuery.Open(aSQL: String): iQuery;
 var
-  Query : TZQuery;
   DataSet : iDataSet;
 begin
   Result := Self;

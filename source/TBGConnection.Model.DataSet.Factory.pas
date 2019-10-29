@@ -8,13 +8,13 @@ uses
 
 Type
   TConnectionModelDataSetFactory = class(TInterfacedObject, iDataSetFactory)
-    private
-      FDriver : iDriver;
-    public
-      constructor Create(Driver : iDriver);
-      destructor Destroy; override;
-      class function New(Driver : iDriver) : iDataSetFactory;
-      function DataSet(Observer : ICacheDataSetSubject): iDataSet;
+  private
+    FDriver : iDriver;
+  public
+    constructor Create(Driver : iDriver);
+    destructor Destroy; override;
+    class function New(Driver : iDriver) : iDataSetFactory;
+    function DataSet(Observer : ICacheDataSetSubject): iDataSet;
   end;
 
 implementation

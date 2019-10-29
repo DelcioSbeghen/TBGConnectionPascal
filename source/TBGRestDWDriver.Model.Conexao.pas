@@ -32,7 +32,7 @@ Type
       //iConexao
       function Conectar : iConexao;
       function &End: TComponent;
-      function Connection : TCustomConnection;
+      function Connection : TComponent;
       function StartTransaction : iConexao;
       function RollbackTransaction : iConexao;
       function Commit : iConexao;
@@ -62,9 +62,9 @@ begin
   Result := FConnection;
 end;
 
-function TRestDWDriverModelConexao.Connection: TCustomConnection;
+function TRestDWDriverModelConexao.Connection: TComponent;
 begin
-  Result := TCustomConnection(FConnection);
+  Result := FConnection;
 end;
 
 constructor TRestDWDriverModelConexao.Create(Connection : TRestDWDataBase; LimitCacheRegister : Integer; Driver : iDriver);

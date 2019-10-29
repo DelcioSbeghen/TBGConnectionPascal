@@ -9,22 +9,22 @@ uses
 
 Type
   TDBExpressDriverModelConexao = class(TInterfacedObject, iConexao)
-    private
-      FConnection : TSQLConnection;
-      FTrans: TDBXTransaction;
-      FDriver : iDriver;
-    public
-      constructor Create(Connection : TSQLConnection; LimitCacheRegister : Integer; Driver : iDriver);
-      destructor Destroy; override;
-      class function New(Connection : TSQLConnection; LimitCacheRegister : Integer; Driver : iDriver) : iConexao;
-      function ThisAs: TObject;
-      //iConexao
-      function Conectar : iConexao;
-      function &End: TComponent;
-      function Connection : TCustomConnection;
-      function StartTransaction : iConexao;
-      function RollbackTransaction : iConexao;
-      function Commit : iConexao;
+  private
+    FConnection : TSQLConnection;
+    FTrans: TDBXTransaction;
+    FDriver : iDriver;
+  public
+    constructor Create(Connection : TSQLConnection; LimitCacheRegister : Integer; Driver : iDriver);
+    destructor Destroy; override;
+    class function New(Connection : TSQLConnection; LimitCacheRegister : Integer; Driver : iDriver) : iConexao;
+    function ThisAs: TObject;
+    //iConexao
+    function Conectar : iConexao;
+    function &End: TComponent;
+    function Connection : TComponent;
+    function StartTransaction : iConexao;
+    function RollbackTransaction : iConexao;
+    function Commit : iConexao;
   end;
 
 implementation
@@ -51,7 +51,7 @@ begin
   Result := FConnection;
 end;
 
-function TDBExpressDriverModelConexao.Connection: TCustomConnection;
+function TDBExpressDriverModelConexao.Connection: TComponent;
 begin
   Result := FConnection;
 end;

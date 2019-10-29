@@ -47,8 +47,11 @@ Type
   TModelConexaoParametrosZeos = class(TModelConexaoParametros, iConexaoParametrosZeos)
   strict private
     FProtocol: String;
+    FLibLocation: String;
   public
+    function LibraryLocation(Value: String): iConexaoParametrosZeos;
     function Protocol(Value: String): iConexaoParametrosZeos;
+    function GetLibraryLocation: String;
     function GetProtocol: String;
   end;
 
@@ -56,11 +59,23 @@ implementation
 
 { TModelConexaoParametrosZeos }
 
+function TModelConexaoParametrosZeos.LibraryLocation(Value: String
+  ): iConexaoParametrosZeos;
+begin
+  Result := Self;
+  FLibLocation := Value;
+end;
+
 function TModelConexaoParametrosZeos.Protocol(Value: String
   ): iConexaoParametrosZeos;
 begin
   Result := Self;
   FProtocol := Value;
+end;
+
+function TModelConexaoParametrosZeos.GetLibraryLocation: String;
+begin
+  Result := FLibLocation;
 end;
 
 function TModelConexaoParametrosZeos.GetProtocol: String;

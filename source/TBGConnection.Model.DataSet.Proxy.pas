@@ -24,22 +24,22 @@ uses
 
 Type
   TTBGConnectionModelProxy = class(TInterfacedObject, iDriverProxy)
-    private
-      FCacheDataSet : TDictionary<string, iDataSet>;
-      FObserver : ICacheDataSetSubject;
-      FLimitCacheRegister : Integer;
-      FDriver : iDriver;
+  private
+    FCacheDataSet : TDictionary<string, iDataSet>;
+    FObserver : ICacheDataSetSubject;
+    FLimitCacheRegister : Integer;
+    FDriver : iDriver;
     procedure LimiterCache;
-    public
-      constructor Create(LimitCacheRegister : Integer; Driver : iDriver);
-      destructor Destroy; override;
-      class function New(LimitCacheRegister : Integer; Driver : iDriver) : iDriverProxy;
-      function CacheDataSet(Key : String; var Value : iDataSet) : boolean;
-      function AddCacheDataSet(Key : String; Value : iDataSet) : iDriverProxy;
-      function RemoveCache(Key : String) : iDriverProxy;
-      function ClearCache : iDriverProxy;
-      function ReloadCache(Value : String) : iDriverProxy;
-      function ObserverList : ICacheDataSetSubject;
+  public
+    constructor Create(LimitCacheRegister : Integer; Driver : iDriver);
+    destructor Destroy; override;
+    class function New(LimitCacheRegister : Integer; Driver : iDriver) : iDriverProxy;
+    function CacheDataSet(Key : String; var Value : iDataSet) : boolean;
+    function AddCacheDataSet(Key : String; Value : iDataSet) : iDriverProxy;
+    function RemoveCache(Key : String) : iDriverProxy;
+    function ClearCache : iDriverProxy;
+    function ReloadCache(Value : String) : iDriverProxy;
+    function ObserverList : ICacheDataSetSubject;
   end;
 
 implementation
@@ -61,7 +61,6 @@ function TTBGConnectionModelProxy.CacheDataSet(Key: String;
   var Value: iDataSet): boolean;
 var
   Chave : String;
-  DataSet : iDataSet;
 begin
   Result := false;
   if FCacheDataSet.Count > 0 then

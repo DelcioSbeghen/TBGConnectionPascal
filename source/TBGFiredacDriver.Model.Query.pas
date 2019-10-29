@@ -179,7 +179,6 @@ end;
 
 function TFiredacModelQuery.Open(aSQL: String): iQuery;
 var
-  Query : TFDQuery;
   DataSet : iDataSet;
 begin
   Result := Self;

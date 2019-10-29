@@ -29,13 +29,11 @@ Type
   TBGRestDWDriverConexao = class(TComponent, iDriver)
   private
     FFConnection: TRestDWDataBase;
-    FFQuery: TRESTDWClientSQL;
     FiConexao : iConexao;
     FiQuery : TList<iQuery>;
     FLimitCacheRegister : Integer;
     FProxy : iDriverProxy;
     procedure SetFConnection(const Value: TRestDWDataBase);
-    procedure SetFQuery(const Value: TRESTDWClientSQL);
     function GetLimitCache: Integer;
     procedure SetLimitCache(const Value: Integer);
   protected
@@ -46,12 +44,11 @@ Type
     function Cache : iDriverProxy;
     function DataSet : iDataSet;
   public
-    constructor Create;
+    constructor Create; reintroduce;
     destructor Destroy; override;
     class function New : iDriver;
     function ThisAs: TObject;
     function Conectar : iConexao;
-    function &End: TComponent;
     function Parametros: iConexaoParametros;
   published
     property FConnection : TRestDWDataBase read FFConnection write SetFConnection;
@@ -84,11 +81,6 @@ begin
 
 end;
 
-function TBGRestDWDriverConexao.&End: TComponent;
-begin
-
-end;
-
 function TBGRestDWDriverConexao.GetLimitCache: Integer;
 begin
   Result := FLimitCacheRegister;
@@ -110,6 +102,7 @@ end;
 
 constructor TBGRestDWDriverConexao.Create;
 begin
+  inherited Create(nil);
   FiQuery := TList<iQuery>.Create;
 end;
 
@@ -158,11 +151,6 @@ end;
 procedure TBGRestDWDriverConexao.SetFConnection(const Value: TRestDWDataBase);
 begin
   FFConnection := Value;
-end;
-
-procedure TBGRestDWDriverConexao.SetFQuery(const Value: TRESTDWClientSQL);
-begin
-  FFQuery := Value;
 end;
 
 procedure TBGRestDWDriverConexao.SetLimitCache(const Value: Integer);

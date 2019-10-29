@@ -16,17 +16,16 @@ uses
 
 Type
   TTBGConnection = class(TComponent, iTBGConnection)
-    private
-    FObserver : TConnectionModelDataSetObserver;
+  private
     FDriver: iDriver;
     procedure SetDriver(const Value: iDriver);
     function GetDriver: iDriver;
-    public
-      constructor Create;
-      destructor Destroy; override;
-      class function New : iTBGConnection;
-    published
-      property Driver : iDriver read GetDriver write SetDriver;
+  public
+    constructor Create; reintroduce;
+    destructor Destroy; override;
+    class function New : iTBGConnection;
+  published
+    property Driver : iDriver read GetDriver write SetDriver;
   end;
 
 {$ifndef FPC}
@@ -46,13 +45,13 @@ uses
 
 constructor TTBGConnection.Create;
 begin
-
+  inherited Create(nil);
 end;
 
 destructor TTBGConnection.Destroy;
 begin
 
-  inherited;
+  inherited Destroy;
 end;
 
 
@@ -79,7 +78,7 @@ begin
 end;
 {$endif}
 
-initialization
-  TTBGConnection.Create;
+//initialization
+//  TTBGConnection.Create;
 
 end.

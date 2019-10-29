@@ -10,45 +10,45 @@ uses
 
 Type
   TDBExpressModelQuery = class(TComponent, iQuery)
-    private
-      FConexao : TSQLConnection;
-      FiConexao : iConexao;
-      FDriver : iDriver;
-      FQuery : TList<TSQLQuery>;
-      DataSetProvider1: TList<TDataSetProvider>;
-      ClientDataSet1: TList<TClientDataSet>;
-      FKey : Integer;
-      FDataSource : TDataSource;
-      FDataSet : TDictionary<integer, iDataSet>;
-      FChangeDataSet : TChangeDataSet;
-      FSQL : String;
-      procedure InstanciaQuery;
-      function GetDataSet : iDataSet;
-      function GetCDS : TClientDataSet;
-      function GetQuery : TSQLQuery;
-    public
-      constructor Create(Conexao : TSQLConnection; Driver : iDriver);
-      destructor Destroy; override;
-      class function New(Conexao : TSQLConnection; Driver : iDriver) : iQuery;
-      function ThisAs: TObject;
-      //iQuery
-      function Open(aSQL: String): iQuery;
-      function ExecSQL(aSQL : String) : iQuery; overload;
-      function DataSet : TDataSet; overload;
-      function DataSet(Value : TDataSet) : iQuery; overload;
-      function DataSource(Value : TDataSource) : iQuery;
-      function Fields : TFields;
-      function &End: TComponent;
-      procedure ApplyUpdates(DataSet : TDataSet);
-      procedure RealoadCache(DataSet : TDataSet);
-      function Tag(Value : Integer) : iQuery;
-      function LocalSQL(Value : TComponent) : iQuery;
-      function Close : iQuery;
-      function SQL : TStrings;
-      function Params : TParams;
-      function ParamByName(Value : String) : TParam;
-      function ExecSQL : iQuery; overload;
-      function UpdateTableName(Tabela : String) : iQuery;
+  private
+    FConexao : TSQLConnection;
+    FiConexao : iConexao;
+    FDriver : iDriver;
+    FQuery : TList<TSQLQuery>;
+    DataSetProvider1: TList<TDataSetProvider>;
+    ClientDataSet1: TList<TClientDataSet>;
+    FKey : Integer;
+    FDataSource : TDataSource;
+    FDataSet : TDictionary<integer, iDataSet>;
+    FChangeDataSet : TChangeDataSet;
+    FSQL : String;
+    procedure InstanciaQuery;
+    function GetDataSet : iDataSet;
+    function GetCDS : TClientDataSet;
+    function GetQuery : TSQLQuery;
+  public
+    constructor Create(Conexao : TSQLConnection; Driver : iDriver);
+    destructor Destroy; override;
+    class function New(Conexao : TSQLConnection; Driver : iDriver) : iQuery;
+    function ThisAs: TObject;
+    //iQuery
+    function Open(aSQL: String): iQuery;
+    function ExecSQL(aSQL : String) : iQuery; overload;
+    function DataSet : TDataSet; overload;
+    function DataSet(Value : TDataSet) : iQuery; overload;
+    function DataSource(Value : TDataSource) : iQuery;
+    function Fields : TFields;
+    function &End: TComponent;
+    procedure ApplyUpdates(DataSet : TDataSet);
+    procedure RealoadCache(DataSet : TDataSet);
+    function Tag(Value : Integer) : iQuery;
+    function LocalSQL(Value : TComponent) : iQuery;
+    function Close : iQuery;
+    function SQL : TStrings;
+    function Params : TParams;
+    function ParamByName(Value : String) : TParam;
+    function ExecSQL : iQuery; overload;
+    function UpdateTableName(Tabela : String) : iQuery;
   end;
 
 implementation

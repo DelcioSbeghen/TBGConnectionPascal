@@ -11,13 +11,11 @@ Type
   TBGFiredacDriverConexao = class(TComponent, iDriver)
   private
     FFConnection: TFDConnection;
-    FFQuery: TFDQuery;
     FiConexao : iConexao;
     FiQuery : TList<iQuery>;
     FLimitCacheRegister : Integer;
     FProxy : iDriverProxy;
     procedure SetFConnection(const Value: TFDConnection);
-    procedure SetFQuery(const Value: TFDQuery);
     function GetLimitCache: Integer;
     procedure SetLimitCache(const Value: Integer);
   protected
@@ -27,12 +25,11 @@ Type
     function Cache : iDriverProxy;
     function DataSet : iDataSet;
   public
-    constructor Create;
+    constructor Create; reintroduce;
     destructor Destroy; override;
     class function New : iDriver;
     function ThisAs: TObject;
     function Conectar : iConexao;
-    function &End: TComponent;
     function Parametros: iConexaoParametros;
     function LimitCacheRegister(Value : Integer) : iDriver;
   published
@@ -65,11 +62,6 @@ begin
 
 end;
 
-function TBGFiredacDriverConexao.&End: TComponent;
-begin
-
-end;
-
 function TBGFiredacDriverConexao.GetLimitCache: Integer;
 begin
   Result := FLimitCacheRegister;
@@ -91,6 +83,7 @@ end;
 
 constructor TBGFiredacDriverConexao.Create;
 begin
+  inherited Create(nil);
   FiQuery := TList<iQuery>.Create;
 end;
 
@@ -134,11 +127,6 @@ end;
 procedure TBGFiredacDriverConexao.SetFConnection(const Value: TFDConnection);
 begin
   FFConnection := Value;
-end;
-
-procedure TBGFiredacDriverConexao.SetFQuery(const Value: TFDQuery);
-begin
-  FFQuery := Value;
 end;
 
 procedure TBGFiredacDriverConexao.SetLimitCache(const Value: Integer);

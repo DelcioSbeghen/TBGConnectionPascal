@@ -27,7 +27,7 @@ Type
     function ThisAs: TObject;
     function Conectar : iConexao;
     function &End: TComponent;
-    function Connection : TCustomConnection;
+    function Connection : TComponent;
     function StartTransaction : iConexao;
     function RollbackTransaction : iConexao;
     function Commit : iConexao;
@@ -57,9 +57,9 @@ begin
   Result := FConnection;
 end;
 
-function TZeosDriverModelConexao.Connection: TCustomConnection;
+function TZeosDriverModelConexao.Connection: TComponent;
 begin
-  raise Exception.Create('Função não suportada para este driver');
+  Result := FConnection;
 end;
 
 constructor TZeosDriverModelConexao.Create(Connection : TZConnection; LimitCacheRegister : Integer; Driver : iDriver);

@@ -36,7 +36,7 @@ type
     ['{FF14FC96-C57C-4BD0-9AFB-5F7AAD5D5138}']
     function Conectar : iConexao;
     function &End: TComponent;
-    function Connection : TCustomConnection;
+    function Connection : TComponent;
     function Commit : iConexao;
     function StartTransaction : iConexao;
     function RollbackTransaction : iConexao;
@@ -82,8 +82,10 @@ type
 
   iConexaoParametrosZeos = interface(iConexaoParametros)
     ['{583A441A-5798-4BB6-B29B-3D366FCF5E46}']
+    function LibraryLocation(Value: String): iConexaoParametrosZeos;
     function Protocol(Value: String): iConexaoParametrosZeos;
     function GetProtocol: String;
+    function GetLibraryLocation: String;
   end;
 
   iConexaoParametrosRestDW = interface(iConexaoParametros)
@@ -105,7 +107,7 @@ type
   end;
 
   iInstanciar = interface
-     function Instanciar_Proxy(Value : String) : iDriverProxy;
+    function Instanciar_Proxy(Value : String) : iDriverProxy;
   end;
 
 implementation

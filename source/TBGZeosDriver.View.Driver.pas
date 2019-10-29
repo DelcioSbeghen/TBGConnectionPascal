@@ -28,14 +28,11 @@ Type
   TBGZeosDriverConexao = class(TComponent, iDriver)
   private
     FFConnection: TZConnection;
-    FFQuery: TZQuery;
     FiConexao : iConexao;
     FiQuery : TList<iQuery>;
     FLimitCacheRegister : Integer;
-    FLimitCache: Integer;
     FProxy : iDriverProxy;
     procedure SetFConnection(const Value: TZConnection);
-    procedure SetFQuery(const Value: TZQuery);
     procedure SetLimitCache(const Value: Integer);
     function GetLimitCache: Integer;
   protected
@@ -45,12 +42,11 @@ Type
     function DataSet : iDataSet;
     function Cache : iDriverProxy;
   public
-    constructor Create;
+    constructor Create; reintroduce;
     destructor Destroy; override;
     class function New : iDriver;
     function ThisAs: TObject;
     function Conectar : iConexao;
-    function &End: TComponent;
     function Parametros: iConexaoParametros;
     function LimitCacheRegister(Value : Integer) : iDriver;
   published
@@ -83,11 +79,6 @@ begin
 
 end;
 
-function TBGZeosDriverConexao.&End: TComponent;
-begin
-
-end;
-
 function TBGZeosDriverConexao.GetLimitCache: Integer;
 begin
   Result := FLimitCacheRegister;
@@ -109,8 +100,8 @@ end;
 
 constructor TBGZeosDriverConexao.Create;
 begin
+  inherited Create(nil);
   FiQuery := TList<iQuery>.Create;
-  LimitCache := 10;
 end;
 
 function TBGZeosDriverConexao.DataSet: iDataSet;
@@ -122,7 +113,16 @@ begin
 end;
 
 destructor TBGZeosDriverConexao.Destroy;
+var
+  LQuery: iQuery;
+  I: Integer;
 begin
+  for I := FiQuery.Count - 1 downto 0 do
+  begin
+    LQuery := FiQuery.Items[I];
+    LQuery := nil;
+    FiQuery.Delete(I);
+  end;
   FreeAndNil(FiQuery);
   inherited;
 end;
@@ -158,11 +158,6 @@ end;
 procedure TBGZeosDriverConexao.SetFConnection(const Value: TZConnection);
 begin
   FFConnection := Value;
-end;
-
-procedure TBGZeosDriverConexao.SetFQuery(const Value: TZQuery);
-begin
-  FFQuery := Value;
 end;
 
 procedure TBGZeosDriverConexao.SetLimitCache(const Value: Integer);
