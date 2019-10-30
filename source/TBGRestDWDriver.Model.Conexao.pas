@@ -23,11 +23,10 @@ Type
   TRestDWDriverModelConexao = class(TInterfacedObject, iConexao)
     private
       FConnection : TRESTDWDataBase;
-      FDriver : iDriver;
     public
-      constructor Create(Connection : TRestDWDataBase; LimitCacheRegister : Integer; Driver : iDriver);
+      constructor Create(Connection : TRestDWDataBase; LimitCacheRegister : Integer);
       destructor Destroy; override;
-      class function New(Connection : TRestDWDataBase; LimitCacheRegister : Integer; Driver : iDriver) : iConexao;
+      class function New(Connection : TRestDWDataBase; LimitCacheRegister : Integer) : iConexao;
       function ThisAs: TObject;
       //iConexao
       function Conectar : iConexao;
@@ -67,10 +66,9 @@ begin
   Result := FConnection;
 end;
 
-constructor TRestDWDriverModelConexao.Create(Connection : TRestDWDataBase; LimitCacheRegister : Integer; Driver : iDriver);
+constructor TRestDWDriverModelConexao.Create(Connection : TRestDWDataBase; LimitCacheRegister : Integer);
 begin
   FConnection := Connection;
-  FDriver := Driver;
 end;
 
 destructor TRestDWDriverModelConexao.Destroy;
@@ -79,9 +77,9 @@ begin
   inherited;
 end;
 
-class function TRestDWDriverModelConexao.New(Connection : TRestDWDataBase; LimitCacheRegister : Integer; Driver : iDriver) : iConexao;
+class function TRestDWDriverModelConexao.New(Connection : TRestDWDataBase; LimitCacheRegister : Integer) : iConexao;
 begin
-  Result := Self.Create(Connection, LimitCacheRegister, Driver);
+  Result := Self.Create(Connection, LimitCacheRegister);
 end;
 
 function TRestDWDriverModelConexao.ThisAs: TObject;

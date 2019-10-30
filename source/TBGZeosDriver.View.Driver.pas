@@ -21,6 +21,9 @@ uses
   TBGConnection.Model.Interfaces, TBGConnection.Model.Conexao.Parametros,
   TBGConnection.Model.DataSet.Interfaces;
 
+const
+  c_DefaultLimitCache = 10;
+
 Type
 
   { TBGZeosDriverConexao }
@@ -51,7 +54,7 @@ Type
     function LimitCacheRegister(Value : Integer) : iDriver;
   published
     property FConnection : TZConnection read FFConnection write SetFConnection;
-    property LimitCache : Integer read GetLimitCache write SetLimitCache;
+    property LimitCache : Integer read GetLimitCache write SetLimitCache stored True default c_DefaultLimitCache;
   end;
 
 {$ifndef FPC}
@@ -93,7 +96,7 @@ end;
 function TBGZeosDriverConexao.Conexao: iConexao;
 begin
   if not Assigned(FiConexao) then
-    FiConexao := TZeosDriverModelConexao.New(FFConnection, FLimitCacheRegister, Self);
+    FiConexao := TZeosDriverModelConexao.New(FFConnection, FLimitCacheRegister{, Self});
 
   Result := FiConexao;
 end;
@@ -102,6 +105,7 @@ constructor TBGZeosDriverConexao.Create;
 begin
   inherited Create(nil);
   FiQuery := TList<iQuery>.Create;
+  LimitCache := c_DefaultLimitCache;
 end;
 
 function TBGZeosDriverConexao.DataSet: iDataSet;
@@ -149,7 +153,7 @@ begin
     FiQuery := TList<iQuery>.Create;
 
   if Not Assigned(FiConexao) then
-    FiConexao := TZeosDriverModelConexao.New(FFConnection, FLimitCacheRegister, Self);
+    FiConexao := TZeosDriverModelConexao.New(FFConnection, FLimitCacheRegister{, Self});
 
   FiQuery.Add(TZeosModelQuery.New(FFConnection, Self));
   Result := FiQuery[FiQuery.Count-1];

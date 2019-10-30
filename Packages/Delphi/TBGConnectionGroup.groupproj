@@ -24,6 +24,9 @@
         <Projects Include="TBGFiredacDriver.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="TBGInterbaseExpressDriver.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -95,14 +98,23 @@
     <Target Name="TBGFiredacDriver:Make">
         <MSBuild Projects="TBGFiredacDriver.dproj" Targets="Make"/>
     </Target>
+    <Target Name="TBGInterbaseExpressDriver">
+        <MSBuild Projects="TBGInterbaseExpressDriver.dproj"/>
+    </Target>
+    <Target Name="TBGInterbaseExpressDriver:Clean">
+        <MSBuild Projects="TBGInterbaseExpressDriver.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TBGInterbaseExpressDriver:Make">
+        <MSBuild Projects="TBGInterbaseExpressDriver.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="TBGConnection;TBGZeosDriver;TBGQuery;TBGRestDWDriver;TBGDBExpressDriver;TBGFirebaseConnection;TBGFiredacDriver"/>
+        <CallTarget Targets="TBGConnection;TBGZeosDriver;TBGQuery;TBGRestDWDriver;TBGDBExpressDriver;TBGFirebaseConnection;TBGFiredacDriver;TBGInterbaseExpressDriver"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="TBGConnection:Clean;TBGZeosDriver:Clean;TBGQuery:Clean;TBGRestDWDriver:Clean;TBGDBExpressDriver:Clean;TBGFirebaseConnection:Clean;TBGFiredacDriver:Clean"/>
+        <CallTarget Targets="TBGConnection:Clean;TBGZeosDriver:Clean;TBGQuery:Clean;TBGRestDWDriver:Clean;TBGDBExpressDriver:Clean;TBGFirebaseConnection:Clean;TBGFiredacDriver:Clean;TBGInterbaseExpressDriver:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="TBGConnection:Make;TBGZeosDriver:Make;TBGQuery:Make;TBGRestDWDriver:Make;TBGDBExpressDriver:Make;TBGFirebaseConnection:Make;TBGFiredacDriver:Make"/>
+        <CallTarget Targets="TBGConnection:Make;TBGZeosDriver:Make;TBGQuery:Make;TBGRestDWDriver:Make;TBGDBExpressDriver:Make;TBGFirebaseConnection:Make;TBGFiredacDriver:Make;TBGInterbaseExpressDriver:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

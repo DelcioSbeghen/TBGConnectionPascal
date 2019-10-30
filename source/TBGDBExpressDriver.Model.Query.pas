@@ -12,7 +12,6 @@ Type
   TDBExpressModelQuery = class(TComponent, iQuery)
   private
     FConexao : TSQLConnection;
-    FiConexao : iConexao;
     FDriver : iDriver;
     FQuery : TList<TSQLQuery>;
     DataSetProvider1: TList<TDataSetProvider>;
@@ -20,14 +19,13 @@ Type
     FKey : Integer;
     FDataSource : TDataSource;
     FDataSet : TDictionary<integer, iDataSet>;
-    FChangeDataSet : TChangeDataSet;
     FSQL : String;
     procedure InstanciaQuery;
     function GetDataSet : iDataSet;
     function GetCDS : TClientDataSet;
     function GetQuery : TSQLQuery;
   public
-    constructor Create(Conexao : TSQLConnection; Driver : iDriver);
+    constructor Create(Conexao : TSQLConnection; Driver : iDriver); reintroduce;
     destructor Destroy; override;
     class function New(Conexao : TSQLConnection; Driver : iDriver) : iQuery;
     function ThisAs: TObject;
@@ -140,6 +138,7 @@ end;
 
 constructor TDBExpressModelQuery.Create(Conexao : TSQLConnection; Driver : iDriver);
 begin
+  inherited Create(nil);
   FDriver := Driver;
   FConexao := Conexao;
   FQuery := TList<TSQLQuery>.Create;
@@ -211,7 +210,6 @@ end;
 
 function TDBExpressModelQuery.Open(aSQL: String): iQuery;
 var
-  Query : TSQLQuery;
   DataSet : iDataSet;
 begin
   Result := Self;

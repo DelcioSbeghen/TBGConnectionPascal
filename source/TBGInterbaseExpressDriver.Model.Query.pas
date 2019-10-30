@@ -10,44 +10,43 @@ uses
 
 Type
   TInterbaseExpressModelQuery = class(TComponent, iQuery)
-    private
-      FConexao : TIBDatabase;
-      FiConexao : iConexao;
-      FDriver : iDriver;
-      FQuery : TList<TIBQuery>;
-      DataSetProvider1: TList<TDataSetProvider>;
-      ClientDataSet1: TList<TClientDataSet>;
-      FKey : Integer;
-      FDataSource : TDataSource;
-      FDataSet : TDictionary<integer, iDataSet>;
-      FChangeDataSet : TChangeDataSet;
-      FSQL : String;
-      procedure InstanciaQuery;
-      function GetDataSet : iDataSet;
-      function GetCDS : TClientDataSet;
-      function GetQuery : TIBQuery;
-    public
-      constructor Create(Conexao : TIBDatabase; Driver : iDriver);
-      destructor Destroy; override;
-      class function New(Conexao : TIBDatabase; Driver : iDriver) : iQuery;
-      //iQuery
-      function Open(aSQL: String): iQuery;
-      function ExecSQL(aSQL : String) : iQuery; overload;
-      function DataSet : TDataSet; overload;
-      function DataSet(Value : TDataSet) : iQuery; overload;
-      function DataSource(Value : TDataSource) : iQuery;
-      function Fields : TFields;
-      function &End: TComponent;
-      procedure ApplyUpdates(DataSet : TDataSet);
-      procedure RealoadCache(DataSet : TDataSet);
-      function Tag(Value : Integer) : iQuery;
-      function LocalSQL(Value : TComponent) : iQuery;
-      function Close : iQuery;
-      function SQL : TStrings;
-      function Params : TParams;
-      function ParamByName(Value : String) : TParam;
-      function ExecSQL : iQuery; overload;
-      function UpdateTableName(Tabela : String) : iQuery;
+  private
+    FConexao : TIBDatabase;
+    FDriver : iDriver;
+    FQuery : TList<TIBQuery>;
+    DataSetProvider1: TList<TDataSetProvider>;
+    ClientDataSet1: TList<TClientDataSet>;
+    FKey : Integer;
+    FDataSource : TDataSource;
+    FDataSet : TDictionary<integer, iDataSet>;
+    FSQL : String;
+    procedure InstanciaQuery;
+    function GetDataSet : iDataSet;
+    function GetCDS : TClientDataSet;
+    function GetQuery : TIBQuery;
+  public
+    constructor Create(Conexao : TIBDatabase; Driver : iDriver); reintroduce;
+    destructor Destroy; override;
+    class function New(Conexao : TIBDatabase; Driver : iDriver) : iQuery;
+    //iQuery
+    function ThisAs: TObject;
+    function Open(aSQL: String): iQuery;
+    function ExecSQL(aSQL : String) : iQuery; overload;
+    function DataSet : TDataSet; overload;
+    function DataSet(Value : TDataSet) : iQuery; overload;
+    function DataSource(Value : TDataSource) : iQuery;
+    function Fields : TFields;
+    function &End: TComponent;
+    procedure ApplyUpdates(DataSet : TDataSet);
+    procedure RealoadCache(DataSet : TDataSet);
+    function Tag(Value : Integer) : iQuery;
+    function LocalSQL(Value : TComponent) : iQuery;
+    function Close : iQuery;
+    function SQL : TStrings;
+    function Params : TParams;
+    function ParamByName(Value : String) : TParam;
+    function ExecSQL : iQuery; overload;
+    function UpdateTableName(Tabela : String) : iQuery;
   end;
 
 implementation
@@ -69,6 +68,7 @@ end;
 
 constructor TInterbaseExpressModelQuery.Create(Conexao: TIBDatabase; Driver: iDriver);
 begin
+  inherited Create(nil);
   FDriver := Driver;
   FConexao := Conexao;
   FQuery := TList<TIBQuery>.Create;
@@ -184,7 +184,6 @@ end;
 
 function TInterbaseExpressModelQuery.Open(aSQL: String): iQuery;
 var
-  Query : TIBQuery;
   DataSet : iDataSet;
 begin
   Result := Self;
@@ -229,6 +228,11 @@ function TInterbaseExpressModelQuery.Tag(Value: Integer): iQuery;
 begin
   Result := Self;
   GetQuery.Tag := Value;
+end;
+
+function TInterbaseExpressModelQuery.ThisAs: TObject;
+begin
+  Result := Self;
 end;
 
 function TInterbaseExpressModelQuery.UpdateTableName(Tabela: String): iQuery;

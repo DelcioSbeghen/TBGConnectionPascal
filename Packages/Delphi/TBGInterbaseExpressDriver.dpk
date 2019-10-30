@@ -25,6 +25,7 @@ package TBGInterbaseExpressDriver;
 {$IMAGEBASE $400000}
 {$DEFINE DEBUG}
 {$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION 'TBG Abstract Connection for Pascal - Interbase Express Driver'}
 {$IMPLICITBUILD ON}
 
 requires

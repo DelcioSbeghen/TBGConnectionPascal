@@ -12,11 +12,10 @@ Type
   private
     FConnection : TSQLConnection;
     FTrans: TDBXTransaction;
-    FDriver : iDriver;
   public
-    constructor Create(Connection : TSQLConnection; LimitCacheRegister : Integer; Driver : iDriver);
+    constructor Create(Connection : TSQLConnection; LimitCacheRegister : Integer);
     destructor Destroy; override;
-    class function New(Connection : TSQLConnection; LimitCacheRegister : Integer; Driver : iDriver) : iConexao;
+    class function New(Connection : TSQLConnection; LimitCacheRegister : Integer) : iConexao;
     function ThisAs: TObject;
     //iConexao
     function Conectar : iConexao;
@@ -56,10 +55,9 @@ begin
   Result := FConnection;
 end;
 
-constructor TDBExpressDriverModelConexao.Create(Connection : TSQLConnection; LimitCacheRegister : Integer; Driver : iDriver);
+constructor TDBExpressDriverModelConexao.Create(Connection : TSQLConnection; LimitCacheRegister : Integer);
 begin
   FConnection := Connection;
-  FDriver := Driver;
 end;
 
 destructor TDBExpressDriverModelConexao.Destroy;
@@ -68,9 +66,9 @@ begin
   inherited;
 end;
 
-class function TDBExpressDriverModelConexao.New(Connection : TSQLConnection; LimitCacheRegister : Integer; Driver : iDriver) : iConexao;
+class function TDBExpressDriverModelConexao.New(Connection : TSQLConnection; LimitCacheRegister : Integer) : iConexao;
 begin
-  Result := Self.Create(Connection, LimitCacheRegister, Driver);
+  Result := Self.Create(Connection, LimitCacheRegister);
 end;
 
 function TDBExpressDriverModelConexao.RollbackTransaction: iConexao;

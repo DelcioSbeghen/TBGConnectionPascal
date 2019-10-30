@@ -1,7 +1,6 @@
 package TBGQuery;
 
 {$R *.res}
-{$R *.otares}
 {$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
@@ -26,6 +25,7 @@ package TBGQuery;
 {$IMAGEBASE $400000}
 {$DEFINE DEBUG}
 {$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION 'TBG Abstract Connection for Pascal - Query SQL'}
 {$IMPLICITBUILD ON}
 
 requires

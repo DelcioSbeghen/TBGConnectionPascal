@@ -70,7 +70,6 @@ begin
       begin
         Value := FCacheDataSet.Items[Chave];
         Result := true;
-        Break;
       end;
   end;
 

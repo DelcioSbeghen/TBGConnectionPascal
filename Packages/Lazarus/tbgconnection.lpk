@@ -11,7 +11,7 @@
         <UnitOutputDirectory Value="lib/$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
-    <Files Count="12">
+    <Files Count="13">
       <Item1>
         <Filename Value="../../source/TBGConnection.Model.Interfaces.pas"/>
         <UnitName Value="TBGConnection.Model.Interfaces"/>
@@ -29,34 +29,38 @@
         <UnitName Value="TBGConnection.Model.Conexao.Parametros"/>
       </Item4>
       <Item5>
-        <Filename Value="../../source/TBGConnection.Model.DataSet.Proxy.pas"/>
-        <UnitName Value="TBGConnection.Model.DataSet.Proxy"/>
+        <Filename Value="../../source/TBGConnection.Model.Conexao.Parametros.RestDW.pas"/>
+        <UnitName Value="TBGConnection.Model.Conexao.Parametros.RestDW"/>
       </Item5>
       <Item6>
-        <Filename Value="../../source/TBGConnection.Model.DataSet.Observer.pas"/>
-        <UnitName Value="TBGConnection.Model.DataSet.Observer"/>
+        <Filename Value="../../source/TBGConnection.Model.DataSet.Proxy.pas"/>
+        <UnitName Value="TBGConnection.Model.DataSet.Proxy"/>
       </Item6>
       <Item7>
-        <Filename Value="../../source/TBGConnection.Model.DataSet.Factory.pas"/>
-        <UnitName Value="TBGConnection.Model.DataSet.Factory"/>
+        <Filename Value="../../source/TBGConnection.Model.DataSet.Observer.pas"/>
+        <UnitName Value="TBGConnection.Model.DataSet.Observer"/>
       </Item7>
       <Item8>
-        <Filename Value="../../source/TBGConnection.Model.DataSet.Interfaces.pas"/>
-        <UnitName Value="TBGConnection.Model.DataSet.Interfaces"/>
+        <Filename Value="../../source/TBGConnection.Model.DataSet.Factory.pas"/>
+        <UnitName Value="TBGConnection.Model.DataSet.Factory"/>
       </Item8>
       <Item9>
+        <Filename Value="../../source/TBGConnection.Model.DataSet.Interfaces.pas"/>
+        <UnitName Value="TBGConnection.Model.DataSet.Interfaces"/>
+      </Item9>
+      <Item10>
         <Filename Value="../../source/TBGConnection.Model.Helper.pas"/>
         <UnitName Value="TBGConnection.Model.Helper"/>
-      </Item9>
-      <Item11>
+      </Item10>
+      <Item12>
         <Filename Value="tbgconnectionreg.pas"/>
         <HasRegisterProc Value="True"/>
         <UnitName Value="TBGConnectionReg"/>
-      </Item11>
-      <Item12>
+      </Item12>
+      <Item13>
         <Filename Value="../../img/lazarus/tbgconnection.lrs"/>
         <Type Value="LRS"/>
-      </Item12>
+      </Item13>
     </Files>
     <RequiredPkgs Count="2">
       <Item1>

@@ -22,6 +22,9 @@ uses
   TBGConnection.Model.Conexao.Parametros,
   TBGConnection.Model.DataSet.Interfaces;
 
+const
+  c_DefaultLimitCache = 10;
+
 Type
 
   { TBGRestDWDriverConexao }
@@ -52,7 +55,7 @@ Type
     function Parametros: iConexaoParametros;
   published
     property FConnection : TRestDWDataBase read FFConnection write SetFConnection;
-    property LimitCache : Integer read GetLimitCache write SetLimitCache;
+    property LimitCache : Integer read GetLimitCache write SetLimitCache stored True default c_DefaultLimitCache;
   end;
 
 {$ifndef FPC}
@@ -95,7 +98,7 @@ end;
 function TBGRestDWDriverConexao.Conexao: iConexao;
 begin
   if not Assigned(FiConexao) then
-    FiConexao := TRestDWDriverModelConexao.New(FFConnection, FLimitCacheRegister, Self);
+    FiConexao := TRestDWDriverModelConexao.New(FFConnection, FLimitCacheRegister);
 
   Result := FiConexao;
 end;
@@ -104,6 +107,7 @@ constructor TBGRestDWDriverConexao.Create;
 begin
   inherited Create(nil);
   FiQuery := TList<iQuery>.Create;
+  LimitCache := c_DefaultLimitCache;
 end;
 
 function TBGRestDWDriverConexao.DataSet: iDataSet;
@@ -142,7 +146,7 @@ begin
     FiQuery := TList<iQuery>.Create;
 
   if Not Assigned(FiConexao) then
-    FiConexao := TRestDWDriverModelConexao.New(FFConnection, FLimitCacheRegister, Self);
+    FiConexao := TRestDWDriverModelConexao.New(FFConnection, FLimitCacheRegister);
 
   FiQuery.Add(TRestDWModelQuery.New(FFConnection, Self));
   Result := FiQuery[FiQuery.Count-1];

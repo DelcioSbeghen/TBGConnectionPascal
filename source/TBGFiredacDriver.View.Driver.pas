@@ -7,6 +7,9 @@ uses
   FireDAC.Comp.Client, System.Generics.Collections, FireDAC.DApt,
   TBGConnection.Model.DataSet.Interfaces;
 
+const
+  c_DefaultLimitCache = 10;
+
 Type
   TBGFiredacDriverConexao = class(TComponent, iDriver)
   private
@@ -34,7 +37,7 @@ Type
     function LimitCacheRegister(Value : Integer) : iDriver;
   published
     property FConnection : TFDConnection read FFConnection write SetFConnection;
-    property LimitCache : Integer read GetLimitCache write SetLimitCache;
+    property LimitCache : Integer read GetLimitCache write SetLimitCache stored True default c_DefaultLimitCache;
   end;
 
 procedure Register;
@@ -76,7 +79,7 @@ end;
 function TBGFiredacDriverConexao.Conexao: iConexao;
 begin
   if not Assigned(FiConexao) then
-    FiConexao := TFiredacDriverModelConexao.New(FFConnection, FLimitCacheRegister, Self);
+    FiConexao := TFiredacDriverModelConexao.New(FFConnection, FLimitCacheRegister);
 
   Result := FiConexao;
 end;
@@ -85,6 +88,7 @@ constructor TBGFiredacDriverConexao.Create;
 begin
   inherited Create(nil);
   FiQuery := TList<iQuery>.Create;
+  LimitCache := c_DefaultLimitCache;
 end;
 
 function TBGFiredacDriverConexao.DataSet: iDataSet;
@@ -118,7 +122,7 @@ begin
     FiQuery := TList<iQuery>.Create;
 
   if Not Assigned(FiConexao) then
-    FiConexao := TFiredacDriverModelConexao.New(FFConnection, FLimitCacheRegister, Self);
+    FiConexao := TFiredacDriverModelConexao.New(FFConnection, FLimitCacheRegister);
 
   FiQuery.Add(TFiredacModelQuery.New(FFConnection, Self));
   Result := FiQuery[FiQuery.Count-1];

@@ -10,11 +10,10 @@ Type
   TFiredacDriverModelConexao = class(TInterfacedObject, iConexao)
   private
     FConnection : TFDConnection;
-    FDriver : iDriver;
   public
-    constructor Create(Connection : TFDConnection; LimitCacheRegister : Integer; Driver : iDriver);
+    constructor Create(Connection : TFDConnection; LimitCacheRegister : Integer);
     destructor Destroy; override;
-    class function New(Connection : TFDConnection; LimitCacheRegister : Integer; Driver : iDriver) : iConexao;
+    class function New(Connection : TFDConnection; LimitCacheRegister : Integer) : iConexao;
     function ThisAs: TObject;
     //iConexao
     function Conectar : iConexao;
@@ -54,10 +53,9 @@ begin
   Result := FConnection;
 end;
 
-constructor TFiredacDriverModelConexao.Create(Connection : TFDConnection; LimitCacheRegister : Integer; Driver : iDriver);
+constructor TFiredacDriverModelConexao.Create(Connection : TFDConnection; LimitCacheRegister : Integer);
 begin
   FConnection := Connection;
-  FDriver := Driver;
 end;
 
 destructor TFiredacDriverModelConexao.Destroy;
@@ -66,9 +64,9 @@ begin
   inherited;
 end;
 
-class function TFiredacDriverModelConexao.New(Connection : TFDConnection; LimitCacheRegister : Integer; Driver : iDriver) : iConexao;
+class function TFiredacDriverModelConexao.New(Connection : TFDConnection; LimitCacheRegister : Integer) : iConexao;
 begin
-  Result := Self.Create(Connection, LimitCacheRegister, Driver);
+  Result := Self.Create(Connection, LimitCacheRegister);
 end;
 
 function TFiredacDriverModelConexao.RollbackTransaction: iConexao;

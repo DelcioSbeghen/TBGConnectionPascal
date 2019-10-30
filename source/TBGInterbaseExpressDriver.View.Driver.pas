@@ -8,36 +8,37 @@ uses
   IBX.IBDatabase, IBX.IBQuery,
   TBGConnection.Model.DataSet.Interfaces;
 
+const
+  c_DefaultLimitCache = 10;
+
 Type
   TBGInterbaseExpressDriverConexao = class(TComponent, iDriver)
   private
     FFConnection: TIBDatabase;
-    FFQuery: TIBQuery;
     FiConexao : iConexao;
     FiQuery : TList<iQuery>;
     FLimitCacheRegister : Integer;
     FProxy : iDriverProxy;
     procedure SetFConnection(const Value: TIBDatabase);
-    procedure SetFQuery(const Value: TIBQuery);
     function GetLimitCache: Integer;
     procedure SetLimitCache(const Value: Integer);
-    protected
-      FParametros : iConexaoParametros;
-      function Conexao : iConexao;
-      function Query : iQuery;
-      function Cache : iDriverProxy;
-      function DataSet : iDataSet;
-    public
-      constructor Create;
-      destructor Destroy; override;
-      class function New : iDriver;
-      function Conectar : iConexao;
-      function &End: TComponent;
-      function Parametros: iConexaoParametros;
-      function LimitCacheRegister(Value : Integer) : iDriver;
-    published
-      property FConnection : TIBDatabase read FFConnection write SetFConnection;
-      property LimitCache : Integer read GetLimitCache write SetLimitCache;
+  protected
+    FParametros : iConexaoParametros;
+    function Conexao : iConexao;
+    function Query : iQuery;
+    function Cache : iDriverProxy;
+    function DataSet : iDataSet;
+  public
+    constructor Create; reintroduce;
+    destructor Destroy; override;
+    class function New : iDriver;
+    function ThisAs: TObject;
+    function Conectar : iConexao;
+    function Parametros: iConexaoParametros;
+    function LimitCacheRegister(Value : Integer) : iDriver;
+  published
+    property FConnection : TIBDatabase read FFConnection write SetFConnection;
+    property LimitCache : Integer read GetLimitCache write SetLimitCache stored True default c_DefaultLimitCache;
   end;
 
 procedure Register;
@@ -68,13 +69,15 @@ end;
 function TBGInterbaseExpressDriverConexao.Conexao: iConexao;
 begin
   if not Assigned(FiConexao) then
-    FiConexao := TInterbaseExpressDriverModelConexao.New(FFConnection, FLimitCacheRegister, Self);
+    FiConexao := TInterbaseExpressDriverModelConexao.New(FFConnection, FLimitCacheRegister);
   Result := FiConexao;
 end;
 
 constructor TBGInterbaseExpressDriverConexao.Create;
 begin
+  inherited Create(nil);
   FiQuery := TList<iQuery>.Create;
+  LimitCache := c_DefaultLimitCache;
 end;
 
 function TBGInterbaseExpressDriverConexao.DataSet: iDataSet;
@@ -89,11 +92,6 @@ destructor TBGInterbaseExpressDriverConexao.Destroy;
 begin
   FreeAndNil(FiQuery);
   inherited;
-end;
-
-function TBGInterbaseExpressDriverConexao.&End: TComponent;
-begin
-
 end;
 
 function TBGInterbaseExpressDriverConexao.GetLimitCache: Integer;
@@ -123,7 +121,7 @@ begin
     FiQuery := TList<iQuery>.Create;
 
   if Not Assigned(FiConexao) then
-    FiConexao := TInterbaseExpressDriverModelConexao.New(FFConnection, FLimitCacheRegister, Self);
+    FiConexao := TInterbaseExpressDriverModelConexao.New(FFConnection, FLimitCacheRegister);
 
   FiQuery.Add(TInterbaseExpressModelQuery.New(FFConnection, Self));
   Result := FiQuery[FiQuery.Count-1];
@@ -134,14 +132,14 @@ begin
   FFConnection := Value;
 end;
 
-procedure TBGInterbaseExpressDriverConexao.SetFQuery(const Value: TIBQuery);
-begin
-  FFQuery := Value;
-end;
-
 procedure TBGInterbaseExpressDriverConexao.SetLimitCache(const Value: Integer);
 begin
    FLimitCacheRegister := Value;
+end;
+
+function TBGInterbaseExpressDriverConexao.ThisAs: TObject;
+begin
+  Result := Self;
 end;
 
 procedure Register;

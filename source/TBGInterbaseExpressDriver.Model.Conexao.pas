@@ -9,21 +9,21 @@ uses
 
 Type
   TInterbaseExpressDriverModelConexao = class(TInterfacedObject, iConexao)
-    private
-      FConnection : TIBDatabase;
-      FTrans: TIBTransaction;
-      FDriver : iDriver;
-    public
-      constructor Create(Connection : TIBDatabase; LimitCacheRegister : Integer; Driver : iDriver);
-      destructor Destroy; override;
-      class function New(Connection : TIBDatabase; LimitCacheRegister : Integer; Driver : iDriver) : iConexao;
-      //iConexao
-      function Conectar : iConexao;
-      function &End: TComponent;
-      function Connection : TCustomConnection;
-      function StartTransaction : iConexao;
-      function RollbackTransaction : iConexao;
-      function Commit : iConexao;
+  private
+    FConnection : TIBDatabase;
+    FTrans: TIBTransaction;
+  public
+    constructor Create(Connection : TIBDatabase; LimitCacheRegister : Integer);
+    destructor Destroy; override;
+    class function New(Connection : TIBDatabase; LimitCacheRegister : Integer) : iConexao;
+    function ThisAs: TObject;
+    //iConexao
+    function Conectar : iConexao;
+    function &End: TComponent;
+    function Connection : TComponent;
+    function StartTransaction : iConexao;
+    function RollbackTransaction : iConexao;
+    function Commit : iConexao;
   end;
 
 implementation
@@ -46,16 +46,14 @@ begin
 
 end;
 
-function TInterbaseExpressDriverModelConexao.Connection: TCustomConnection;
+function TInterbaseExpressDriverModelConexao.Connection: TComponent;
 begin
   Result := FConnection;
 end;
 
-constructor TInterbaseExpressDriverModelConexao.Create(Connection: TIBDatabase;
-  LimitCacheRegister: Integer; Driver: iDriver);
+constructor TInterbaseExpressDriverModelConexao.Create(Connection : TIBDatabase; LimitCacheRegister : Integer);
 begin
   FConnection := Connection;
-  FDriver := Driver;
 end;
 
 destructor TInterbaseExpressDriverModelConexao.Destroy;
@@ -69,10 +67,9 @@ begin
   Result := FConnection;
 end;
 
-class function TInterbaseExpressDriverModelConexao.New(Connection: TIBDatabase;
-  LimitCacheRegister: Integer; Driver: iDriver): iConexao;
+class function TInterbaseExpressDriverModelConexao.New(Connection : TIBDatabase; LimitCacheRegister : Integer) : iConexao;
 begin
-  Result := Self.Create(Connection, LimitCacheRegister, Driver);
+  Result := Self.Create(Connection, LimitCacheRegister);
 end;
 
 function TInterbaseExpressDriverModelConexao.RollbackTransaction: iConexao;
@@ -85,6 +82,11 @@ function TInterbaseExpressDriverModelConexao.StartTransaction: iConexao;
 begin
   Result := Self;
   FConnection.Transactions[FConnection.FindTransaction(FTrans)].StartTransaction;
+end;
+
+function TInterbaseExpressDriverModelConexao.ThisAs: TObject;
+begin
+  Result := Self;
 end;
 
 end.
