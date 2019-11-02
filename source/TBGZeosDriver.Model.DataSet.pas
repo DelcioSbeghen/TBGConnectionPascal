@@ -83,7 +83,7 @@ end;
 function TConnectionModelZeosDataSet.SQL(Value: String): iDataSet;
 begin
   Result := Self;
-  FSQL := Value;
+  FSQL := UpperCase(Trim(Value));
 end;
 
 function TConnectionModelZeosDataSet.Update(Value: String): ICacheDataSetObserver;

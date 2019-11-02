@@ -75,7 +75,7 @@ end;
 function TConnectionModelInterbaseExpressDataSet.SQL(Value: String): iDataSet;
 begin
   Result := Self;
-  FSQL := Value;
+  FSQL := UpperCase(Trim(Value));
 end;
 
 function TConnectionModelInterbaseExpressDataSet.SQL: String;

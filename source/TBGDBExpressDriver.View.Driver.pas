@@ -22,7 +22,6 @@ Type
     function GetLimitCache: Integer;
     procedure SetLimitCache(const Value: Integer);
   protected
-    FParametros : iConexaoParametros;
     function Conexao : iConexao;
     function Query : iQuery;
     function Cache : iDriverProxy;
@@ -33,11 +32,10 @@ Type
     class function New : iDriver;
     function ThisAs: TObject;
     function Conectar : iConexao;
-    function Parametros: iConexaoParametros;
     function LimitCacheRegister(Value : Integer) : iDriver;
   published
     property FConnection : TSQLConnection read FFConnection write SetFConnection;
-    property LimitCache : Integer read GetLimitCache write SetLimitCache stored True default c_DefaultLimitCache;
+    property LimitCache : Integer read GetLimitCache write SetLimitCache;
   end;
 
 procedure Register;
@@ -87,7 +85,7 @@ constructor TBGDBExpressDriverConexao.Create;
 begin
   inherited Create(nil);
   FiQuery := TList<iQuery>.Create;
-  LimitCache := c_DefaultLimitCache;
+  FLimitCacheRegister := c_DefaultLimitCache;
 end;
 
 function TBGDBExpressDriverConexao.DataSet: iDataSet;
@@ -108,12 +106,6 @@ class function TBGDBExpressDriverConexao.New: iDriver;
 begin
   Result := Self.Create;
 end;
-
-function TBGDBExpressDriverConexao.Parametros: iConexaoParametros;
-begin
-  Result := FParametros;
-end;
-
 
 function TBGDBExpressDriverConexao.Query: iQuery;
 begin

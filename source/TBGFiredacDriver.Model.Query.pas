@@ -23,7 +23,6 @@ Type
     procedure InstanciaQuery;
     function GetDataSet : iDataSet;
     function GetQuery : TFDQuery;
-    procedure SetQuery(Value : TFDQuery);
   public
     constructor Create(Conexao : TFDConnection; Driver : iDriver);
     destructor Destroy; override;
@@ -84,7 +83,7 @@ end;
 
 function TFiredacModelQuery.ExecSQL(aSQL: String): iQuery;
 begin
-  FSQL := aSQL;
+  FSQL := UpperCase(Trim(aSQL));
   GetQuery.SQL.Text := FSQL;
   GetQuery.ExecSQL;
   ApplyUpdates(nil);
@@ -123,9 +122,13 @@ begin
 end;
 
 function TFiredacModelQuery.Close: iQuery;
+var
+  DataSet: iDataSet;
 begin
   Result := Self;
   GetQuery.Close;
+  if FDriver.Cache.CacheDataSet(FSQL, DataSet) then
+    DataSet.DataSet.Close;
 end;
 
 constructor TFiredacModelQuery.Create(Conexao : TFDConnection; Driver : iDriver);
@@ -159,10 +162,12 @@ destructor TFiredacModelQuery.Destroy;
 var
   vQuery: TFDQuery;
 begin
+  FDriver.Cache.ClearCache;
   if Assigned(FQuery) then
   begin
     for vQuery in FQuery do
     begin
+      FQuery.Remove(vQuery);
       vQuery.Close;
       vQuery.Free;
     end;
@@ -182,18 +187,18 @@ var
   DataSet : iDataSet;
 begin
   Result := Self;
-  FSQL := aSQL;
+  FSQL := UpperCase(Trim(aSQL));
   if not FDriver.Cache.CacheDataSet(FSQL, DataSet) then
   begin
     InstanciaQuery;
     DataSet.DataSet(GetQuery);
     DataSet.SQL(FSQL);
     GetQuery.Close;
-    GetQuery.Open(aSQL);
+    GetQuery.Open(FSQL);
     FDriver.Cache.AddCacheDataSet(DataSet.GUUID, DataSet);
-  end
-  else
-    SetQuery(TFDQuery(DataSet.DataSet));
+  end;
+  if not DataSet.DataSet.Active then
+    DataSet.DataSet.Open;
   FDataSource.DataSet := DataSet.DataSet;
   Inc(FKey);
   FDataSet.Add(FKey, DataSet);
@@ -211,11 +216,6 @@ begin
 
   FParams.Assign(GetQuery.Params);
   Result := FParams;
-end;
-
-procedure TFiredacModelQuery.SetQuery(Value: TFDQuery);
-begin
-  FQuery.Items[Pred(FQuery.Count)] := Value;
 end;
 
 function TFiredacModelQuery.SQL: TStrings;

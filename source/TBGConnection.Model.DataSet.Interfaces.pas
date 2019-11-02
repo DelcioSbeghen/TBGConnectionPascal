@@ -41,6 +41,7 @@ type
     ['{2065188E-47F8-431A-9AE7-20E0915E89B3}']
     function AddObserver(Value : ICacheDataSetObserver) : ICacheDataSetSubject;
     function RemoveObserver(Value : ICacheDataSetObserver) : ICacheDataSetSubject;
+    function RemoveAllObservers: ICacheDataSetSubject;
     function Notify(Value : String) : ICacheDataSetSubject;
   end;
 

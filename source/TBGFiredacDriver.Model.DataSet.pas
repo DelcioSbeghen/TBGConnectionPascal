@@ -78,7 +78,7 @@ end;
 function TConnectionModelFiredacDataSet.SQL(Value: String): iDataSet;
 begin
   Result := Self;
-  FSQL := Value;
+  FSQL := UpperCase(Trim(Value));
 end;
 
 function TConnectionModelFiredacDataSet.Update(Value: String): ICacheDataSetObserver;

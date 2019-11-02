@@ -24,9 +24,9 @@ Type
     private
       FConnection : TRESTDWDataBase;
     public
-      constructor Create(Connection : TRestDWDataBase; LimitCacheRegister : Integer);
+      constructor Create(Connection : TRestDWDataBase);
       destructor Destroy; override;
-      class function New(Connection : TRestDWDataBase; LimitCacheRegister : Integer) : iConexao;
+      class function New(Connection : TRestDWDataBase) : iConexao;
       function ThisAs: TObject;
       //iConexao
       function Conectar : iConexao;
@@ -66,7 +66,7 @@ begin
   Result := FConnection;
 end;
 
-constructor TRestDWDriverModelConexao.Create(Connection : TRestDWDataBase; LimitCacheRegister : Integer);
+constructor TRestDWDriverModelConexao.Create(Connection : TRestDWDataBase);
 begin
   FConnection := Connection;
 end;
@@ -77,9 +77,9 @@ begin
   inherited;
 end;
 
-class function TRestDWDriverModelConexao.New(Connection : TRestDWDataBase; LimitCacheRegister : Integer) : iConexao;
+class function TRestDWDriverModelConexao.New(Connection : TRestDWDataBase) : iConexao;
 begin
-  Result := Self.Create(Connection, LimitCacheRegister);
+  Result := Self.Create(Connection);
 end;
 
 function TRestDWDriverModelConexao.ThisAs: TObject;

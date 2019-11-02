@@ -83,7 +83,7 @@ end;
 function TConnectionModelRestDWDataSet.SQL(Value: String): iDataSet;
 begin
   Result := Self;
-  FSQL := Value;
+  FSQL := UpperCase(Trim(Value));
 end;
 
 function TConnectionModelRestDWDataSet.Update(Value: String): ICacheDataSetObserver;

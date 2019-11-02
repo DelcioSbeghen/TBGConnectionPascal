@@ -78,7 +78,7 @@ end;
 function TConnectionModelDBExpressDataSet.SQL(Value: String): iDataSet;
 begin
   Result := Self;
-  FSQL := Value;
+  FSQL := UpperCase(Trim(Value));
 end;
 
 function TConnectionModelDBExpressDataSet.Update(Value: String): ICacheDataSetObserver;

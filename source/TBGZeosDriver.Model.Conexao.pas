@@ -20,9 +20,9 @@ Type
   private
     FConnection : TZConnection;
   public
-    constructor Create(Connection : TZConnection; LimitCacheRegister : Integer);
+    constructor Create(Connection : TZConnection);
     destructor Destroy; override;
-    class function New(Connection : TZConnection; LimitCacheRegister : Integer) : iConexao;
+    class function New(Connection : TZConnection) : iConexao;
     function ThisAs: TObject;
     function Conectar : iConexao;
     function &End: TComponent;
@@ -61,7 +61,7 @@ begin
   Result := FConnection;
 end;
 
-constructor TZeosDriverModelConexao.Create(Connection : TZConnection; LimitCacheRegister : Integer{; Driver : iDriver});
+constructor TZeosDriverModelConexao.Create(Connection : TZConnection);
 begin
   FConnection := Connection;
 end;
@@ -72,9 +72,9 @@ begin
   inherited;
 end;
 
-class function TZeosDriverModelConexao.New(Connection : TZConnection; LimitCacheRegister : Integer{; Driver : iDriver}) : iConexao;
+class function TZeosDriverModelConexao.New(Connection : TZConnection) : iConexao;
 begin
-  Result := Self.Create(Connection, LimitCacheRegister{, Driver});
+  Result := Self.Create(Connection);
 end;
 
 function TZeosDriverModelConexao.ThisAs: TObject;

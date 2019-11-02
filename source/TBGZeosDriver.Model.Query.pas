@@ -95,7 +95,7 @@ end;
 function TZeosModelQuery.ExecSQL(aSQL: String): iQuery;
 begin
   Result := Self;
-  FSQL := aSQL;
+  FSQL := UpperCase(Trim(aSQL));
   GetQuery.SQL.Clear;
   GetQuery.SQL.Add(FSQL);
   GetQuery.ExecSQL;
@@ -135,9 +135,13 @@ begin
 end;
 
 function TZeosModelQuery.Close: iQuery;
+var
+  DataSet: iDataSet;
 begin
   Result := Self;
   GetQuery.Close;
+  if FDriver.Cache.CacheDataSet(FSQL, DataSet) then
+    DataSet.DataSet.Close;
 end;
 
 constructor TZeosModelQuery.Create(Conexao : TZConnection; Driver : iDriver);
@@ -199,7 +203,7 @@ var
   DataSet : iDataSet;
 begin
   Result := Self;
-  FSQL := aSQL;
+  FSQL := UpperCase(Trim(aSQL));
   if not FDriver.Cache.CacheDataSet(FSQL, DataSet) then
   begin
     InstanciaQuery;
@@ -210,6 +214,8 @@ begin
     GetQuery.Open;
     FDriver.Cache.AddCacheDataSet(DataSet.GUUID, DataSet);
   end;
+  if not DataSet.DataSet.Active then
+    DataSet.DataSet.Open;
   FDataSource.DataSet := DataSet.DataSet;
   Inc(FKey);
   FDataSet.Add(FKey, DataSet);

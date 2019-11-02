@@ -45,7 +45,6 @@ Type
     procedure InstanciaQuery;
     function GetDataSet : iDataSet;
     function GetQuery : TRESTDWClientSQL;
-    procedure SetQuery(Value: TRESTDWClientSQL);
   public
     constructor Create(Conexao: TRESTDWDataBase; Driver : iDriver);
     destructor Destroy; override;
@@ -96,9 +95,11 @@ end;
 
 function TRestDWModelQuery.ExecSQL(aSQL: String): iQuery;
 var
-VError : String;
+  VError : String;
 begin
-  GetQuery.SQL.Text := aSQL;
+  Result := Self;
+  FSQL := UpperCase(Trim(aSQL));
+  GetQuery.SQL.Text := FSQL;
   if not GetQuery.ExecSQL(VError) Then
      raise Exception.Create('Erro: ' + vError + sLineBreak +
 	 'Ao executar o comando: ' + GetQuery.SQL.Text);
@@ -163,9 +164,13 @@ begin
 end;
 
 function TRestDWModelQuery.Close: iQuery;
+var
+  DataSet: iDataSet;
 begin
   Result := Self;
   GetQuery.Close;
+  if FDriver.Cache.CacheDataSet(FSQL, DataSet) then
+    DataSet.DataSet.Close;
 end;
 
 constructor TRestDWModelQuery.Create(Conexao: TRESTDWDataBase; Driver : iDriver);
@@ -226,7 +231,7 @@ var
   DataSet : iDataSet;
 begin
   Result := Self;
-  FSQL := aSQL;
+  FSQL := UpperCase(Trim(aSQL));
   if not FDriver.Cache.CacheDataSet(FSQL, DataSet) then
   begin
     InstanciaQuery;
@@ -237,9 +242,9 @@ begin
     GetQuery.SQL.Text := FSQL;
     GetQuery.Open;
     FDriver.Cache.AddCacheDataSet(DataSet.GUUID, DataSet);
-  end
-  else
-    SetQuery(TRESTDWClientSQL(DataSet.DataSet));
+  end;
+  if not DataSet.DataSet.Active then
+    DataSet.DataSet.Open;
   FDataSource.DataSet := DataSet.DataSet;
   Inc(FKey);
   FDataSet.Add(FKey, DataSet);
@@ -253,11 +258,6 @@ end;
 function TRestDWModelQuery.Params: TParams;
 begin
   Result := GetQuery.Params;
-end;
-
-procedure TRestDWModelQuery.SetQuery(Value: TRESTDWClientSQL);
-begin
-  FQuery.Items[Pred(FQuery.Count)] := Value;
 end;
 
 function TRestDWModelQuery.SQL: TStrings;

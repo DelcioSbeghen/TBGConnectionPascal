@@ -4,9 +4,9 @@ interface
 
 uses
   {$ifndef FPC}
-  System.Classes, Data.DB,
+  System.Classes, System.SysUtils, Data.DB,
   {$else}
-  Classes, DB,
+  Classes, SysUtils, DB,
   {$endif}
   TBGConnection.Model.Interfaces, TBGConnection.View.Interfaces;
 
@@ -53,9 +53,19 @@ begin
 end;
 
 function TTBGQuery.GetQuery: iQuery;
+var
+  LDriver: iDriver;
 begin
+  if not Assigned(FConnection) then
+    raise Exception.Create('TBGConnection component not assigned to Query.');
+
+  LDriver := FConnection.GetDriver;
+
+  if not Assigned(LDriver) then
+    raise Exception.Create('Driver not assigned to TBGConnection.');
+
   if not Assigned(FQuery) then
-    FQuery := FConnection.GetDriver.Query;
+    FQuery := LDriver.Query;
 
   FQuery.DataSource(FDataSource);
   Result := FQuery;

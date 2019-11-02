@@ -53,6 +53,7 @@ uses
 function TTBGConnectionModelProxy.AddCacheDataSet(Key: String;
   Value: iDataSet): iDriverProxy;
 begin
+  Result := Self;
   FCacheDataSet.Add(Key, Value);
   LimiterCache;
 end;
@@ -66,7 +67,7 @@ begin
   if FCacheDataSet.Count > 0 then
   begin
     for Chave in FCacheDataSet.Keys do
-      if FCacheDataSet.Items[Chave].SQL = Key then
+      if UpperCase(FCacheDataSet.Items[Chave].SQL) = UpperCase(Key) then
       begin
         Value := FCacheDataSet.Items[Chave];
         Result := true;
@@ -82,6 +83,7 @@ end;
 
 function TTBGConnectionModelProxy.ClearCache: iDriverProxy;
 begin
+  Result := Self;
   FCacheDataSet.Clear;
 end;
 
@@ -95,6 +97,7 @@ end;
 
 destructor TTBGConnectionModelProxy.Destroy;
 begin
+  FObserver.RemoveAllObservers;
   FreeAndNil(FCacheDataSet);
   inherited;
 end;
@@ -132,6 +135,7 @@ end;
 
 function TTBGConnectionModelProxy.RemoveCache(Key: String): iDriverProxy;
 begin
+  Result := Self;
   FCacheDataSet.Remove(Key);
   FCacheDataSet.TrimExcess;
 end;

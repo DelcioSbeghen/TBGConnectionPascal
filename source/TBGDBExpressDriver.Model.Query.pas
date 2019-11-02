@@ -4,7 +4,7 @@ interface
 
 uses
   TBGConnection.Model.Interfaces, Data.DB, System.Classes,
-  System.SysUtils, Data.SqlExpr, Datasnap.Provider, Datasnap.DBCLient,
+  System.SysUtils, Data.SqlExpr, Datasnap.Provider, Datasnap.DBCLient, MidasLib,
   TBGConnection.Model.DataSet.Proxy, TBGConnection.Model.DataSet.Interfaces,
   TBGConnection.Model.DataSet.Observer, System.Generics.Collections;
 
@@ -67,7 +67,7 @@ end;
 
 function TDBExpressModelQuery.ExecSQL(aSQL: String): iQuery;
 begin
-  FSQL := aSQL;
+  FSQL := UpperCase(Trim(aSQL));
   GetQuery.SQL.Text := FSQL;
   GetQuery.ExecSQL;
   RealoadCache(nil);
@@ -113,8 +113,8 @@ begin
   Provider := TDataSetProvider.Create(Self);
   ClientDataSet := TClientDataSet.Create(Self);
   Provider.DataSet := Query;
-  Provider.Options := [poAllowCommandText];
-  Provider.Name := 'Provider' + FormatDateTime('nnss', now);
+  Provider.Options := [poUseQuoteChar, poAllowCommandText];
+  Provider.Name := 'Provider' + FormatDateTime('nnssz', now);
   ClientDataSet.ProviderName := Provider.Name;
   ClientDataSet.FetchOnDemand := true;
   ClientDataSet.AfterPost := ApplyUpdates;
@@ -131,9 +131,13 @@ begin
 end;
 
 function TDBExpressModelQuery.Close: iQuery;
+var
+  DataSet: iDataSet;
 begin
   Result := Self;
   GetQuery.Close;
+  if FDriver.Cache.CacheDataSet(FSQL, DataSet) then
+    DataSet.DataSet.Close;
 end;
 
 constructor TDBExpressModelQuery.Create(Conexao : TSQLConnection; Driver : iDriver);
@@ -213,7 +217,7 @@ var
   DataSet : iDataSet;
 begin
   Result := Self;
-  FSQL := aSQL;
+  FSQL := UpperCase(Trim(aSQL));
   if not FDriver.Cache.CacheDataSet(FSQL, DataSet) then
   begin
     InstanciaQuery;
@@ -224,6 +228,8 @@ begin
     GetCDS.Open;
     FDriver.Cache.AddCacheDataSet(DataSet.GUUID, DataSet);
   end;
+  if not DataSet.DataSet.Active then
+    DataSet.DataSet.Open;
   FDataSource.DataSet := DataSet.DataSet;
   Inc(FKey);
   FDataSet.Add(FKey, DataSet);

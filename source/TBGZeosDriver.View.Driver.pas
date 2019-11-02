@@ -18,7 +18,7 @@ uses
   Generics.Collections,
   {$endif}
   ZConnection, ZDataSet,
-  TBGConnection.Model.Interfaces, TBGConnection.Model.Conexao.Parametros,
+  TBGConnection.Model.Interfaces,
   TBGConnection.Model.DataSet.Interfaces;
 
 const
@@ -39,7 +39,6 @@ Type
     procedure SetLimitCache(const Value: Integer);
     function GetLimitCache: Integer;
   protected
-    FParametros : iConexaoParametros;
     function Conexao : iConexao;
     function Query : iQuery;
     function DataSet : iDataSet;
@@ -50,11 +49,10 @@ Type
     class function New : iDriver;
     function ThisAs: TObject;
     function Conectar : iConexao;
-    function Parametros: iConexaoParametros;
     function LimitCacheRegister(Value : Integer) : iDriver;
   published
     property FConnection : TZConnection read FFConnection write SetFConnection;
-    property LimitCache : Integer read GetLimitCache write SetLimitCache stored True default c_DefaultLimitCache;
+    property LimitCache : Integer read GetLimitCache write SetLimitCache;
   end;
 
 {$ifndef FPC}
@@ -96,7 +94,7 @@ end;
 function TBGZeosDriverConexao.Conexao: iConexao;
 begin
   if not Assigned(FiConexao) then
-    FiConexao := TZeosDriverModelConexao.New(FFConnection, FLimitCacheRegister{, Self});
+    FiConexao := TZeosDriverModelConexao.New(FFConnection);
 
   Result := FiConexao;
 end;
@@ -105,7 +103,7 @@ constructor TBGZeosDriverConexao.Create;
 begin
   inherited Create(nil);
   FiQuery := TList<iQuery>.Create;
-  LimitCache := c_DefaultLimitCache;
+  FLimitCacheRegister := c_DefaultLimitCache;
 end;
 
 function TBGZeosDriverConexao.DataSet: iDataSet;
@@ -117,16 +115,7 @@ begin
 end;
 
 destructor TBGZeosDriverConexao.Destroy;
-var
-  LQuery: iQuery;
-  I: Integer;
 begin
-  for I := FiQuery.Count - 1 downto 0 do
-  begin
-    LQuery := FiQuery.Items[I];
-    LQuery := nil;
-    FiQuery.Delete(I);
-  end;
   FreeAndNil(FiQuery);
   inherited;
 end;
@@ -141,19 +130,13 @@ begin
   Result := Self;
 end;
 
-function TBGZeosDriverConexao.Parametros: iConexaoParametros;
-begin
-  Result := FParametros;
-end;
-
-
 function TBGZeosDriverConexao.Query: iQuery;
 begin
   if Not Assigned(FiQuery) then
     FiQuery := TList<iQuery>.Create;
 
   if Not Assigned(FiConexao) then
-    FiConexao := TZeosDriverModelConexao.New(FFConnection, FLimitCacheRegister{, Self});
+    FiConexao := TZeosDriverModelConexao.New(FFConnection);
 
   FiQuery.Add(TZeosModelQuery.New(FFConnection, Self));
   Result := FiQuery[FiQuery.Count-1];

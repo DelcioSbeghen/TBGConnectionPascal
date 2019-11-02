@@ -19,7 +19,6 @@ uses
   {$endif}
   uRESTDWPoolerDB,
   TBGConnection.Model.Interfaces,
-  TBGConnection.Model.Conexao.Parametros,
   TBGConnection.Model.DataSet.Interfaces;
 
 const
@@ -40,7 +39,6 @@ Type
     function GetLimitCache: Integer;
     procedure SetLimitCache(const Value: Integer);
   protected
-    FParametros : iConexaoParametros;
     function Conexao : iConexao;
     function Query : iQuery;
     function LimitCacheRegister(Value : Integer) : iDriver;
@@ -52,10 +50,9 @@ Type
     class function New : iDriver;
     function ThisAs: TObject;
     function Conectar : iConexao;
-    function Parametros: iConexaoParametros;
   published
     property FConnection : TRestDWDataBase read FFConnection write SetFConnection;
-    property LimitCache : Integer read GetLimitCache write SetLimitCache stored True default c_DefaultLimitCache;
+    property LimitCache : Integer read GetLimitCache write SetLimitCache;
   end;
 
 {$ifndef FPC}
@@ -98,7 +95,7 @@ end;
 function TBGRestDWDriverConexao.Conexao: iConexao;
 begin
   if not Assigned(FiConexao) then
-    FiConexao := TRestDWDriverModelConexao.New(FFConnection, FLimitCacheRegister);
+    FiConexao := TRestDWDriverModelConexao.New(FFConnection);
 
   Result := FiConexao;
 end;
@@ -107,7 +104,7 @@ constructor TBGRestDWDriverConexao.Create;
 begin
   inherited Create(nil);
   FiQuery := TList<iQuery>.Create;
-  LimitCache := c_DefaultLimitCache;
+  FLimitCacheRegister := c_DefaultLimitCache;
 end;
 
 function TBGRestDWDriverConexao.DataSet: iDataSet;
@@ -134,19 +131,13 @@ begin
   Result := Self;
 end;
 
-function TBGRestDWDriverConexao.Parametros: iConexaoParametros;
-begin
-  Result := FParametros;
-end;
-
-
 function TBGRestDWDriverConexao.Query: iQuery;
 begin
   if Not Assigned(FiQuery) then
     FiQuery := TList<iQuery>.Create;
 
   if Not Assigned(FiConexao) then
-    FiConexao := TRestDWDriverModelConexao.New(FFConnection, FLimitCacheRegister);
+    FiConexao := TRestDWDriverModelConexao.New(FFConnection);
 
   FiQuery.Add(TRestDWModelQuery.New(FFConnection, Self));
   Result := FiQuery[FiQuery.Count-1];

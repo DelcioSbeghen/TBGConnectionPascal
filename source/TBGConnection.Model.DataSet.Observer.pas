@@ -1,4 +1,4 @@
-unit TBGConnection.Model.DataSet.Observer;
+﻿unit TBGConnection.Model.DataSet.Observer;
 
 interface
 
@@ -34,6 +34,7 @@ Type
     function AddObserver(Value : ICacheDataSetObserver) : ICacheDataSetSubject;
     function RemoveObserver(Value : ICacheDataSetObserver) : ICacheDataSetSubject;
     function Notify(Value : String) : ICacheDataSetSubject;
+    function RemoveAllObservers: ICacheDataSetSubject;
   end;
 
 implementation
@@ -69,6 +70,12 @@ begin
   Result := Self;
   for I := 0 to Pred(FLista.Count) do
     FLista.Items[I].Update(Value)
+end;
+
+function TConnectionModelDataSetObserver.RemoveAllObservers: ICacheDataSetSubject;
+begin
+  Result := Self;
+  FLista.Clear;
 end;
 
 function TConnectionModelDataSetObserver.RemoveObserver(Value : ICacheDataSetObserver) : ICacheDataSetSubject;

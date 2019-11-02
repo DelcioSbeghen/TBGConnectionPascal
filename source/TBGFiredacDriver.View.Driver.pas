@@ -3,7 +3,7 @@ unit TBGFiredacDriver.View.Driver;
 interface
 
 uses
-  TBGConnection.Model.Interfaces, System.Classes, TBGConnection.Model.Conexao.Parametros,
+  TBGConnection.Model.Interfaces, System.Classes,
   FireDAC.Comp.Client, System.Generics.Collections, FireDAC.DApt,
   TBGConnection.Model.DataSet.Interfaces;
 
@@ -22,7 +22,6 @@ Type
     function GetLimitCache: Integer;
     procedure SetLimitCache(const Value: Integer);
   protected
-    FParametros : iConexaoParametros;
     function Conexao : iConexao;
     function Query : iQuery;
     function Cache : iDriverProxy;
@@ -33,11 +32,10 @@ Type
     class function New : iDriver;
     function ThisAs: TObject;
     function Conectar : iConexao;
-    function Parametros: iConexaoParametros;
     function LimitCacheRegister(Value : Integer) : iDriver;
   published
     property FConnection : TFDConnection read FFConnection write SetFConnection;
-    property LimitCache : Integer read GetLimitCache write SetLimitCache stored True default c_DefaultLimitCache;
+    property LimitCache : Integer read GetLimitCache write SetLimitCache;
   end;
 
 procedure Register;
@@ -88,7 +86,7 @@ constructor TBGFiredacDriverConexao.Create;
 begin
   inherited Create(nil);
   FiQuery := TList<iQuery>.Create;
-  LimitCache := c_DefaultLimitCache;
+  FLimitCacheRegister := c_DefaultLimitCache;
 end;
 
 function TBGFiredacDriverConexao.DataSet: iDataSet;
@@ -109,12 +107,6 @@ class function TBGFiredacDriverConexao.New: iDriver;
 begin
   Result := Self.Create;
 end;
-
-function TBGFiredacDriverConexao.Parametros: iConexaoParametros;
-begin
-  Result := FParametros;
-end;
-
 
 function TBGFiredacDriverConexao.Query: iQuery;
 begin
