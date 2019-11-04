@@ -20,7 +20,7 @@ uses
   ZConnection, ZDataset,
   TBGConnection.Model.Interfaces,
   TBGConnection.Model.DataSet.Interfaces, TBGConnection.Model.DataSet.Proxy,
-  TBGConnection.Model.DataSet.Observer, TBGConnection.Model.DataSet.Factory;
+  TBGConnection.Model.DataSet.Observer;
 
 Type
 

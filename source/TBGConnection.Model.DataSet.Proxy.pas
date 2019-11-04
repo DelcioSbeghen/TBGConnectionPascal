@@ -45,7 +45,6 @@ Type
 implementation
 
 uses
-  TBGConnection.Model.DataSet.Factory,
   TBGConnection.Model.DataSet.Observer;
 
 { TTBGConnectionModelProxy }

@@ -5,7 +5,7 @@ interface
 uses
   TBGConnection.Model.Interfaces, Data.DB, System.Classes, FireDAC.Comp.Client,
   System.SysUtils, TBGConnection.Model.DataSet.Proxy, TBGConnection.Model.Helper,
-  TBGConnection.Model.DataSet.Interfaces, TBGConnection.Model.DataSet.Factory,
+  TBGConnection.Model.DataSet.Interfaces,
   TBGConnection.Model.DataSet.Observer, System.Generics.Collections;
 
 Type
@@ -162,7 +162,6 @@ destructor TFiredacModelQuery.Destroy;
 var
   vQuery: TFDQuery;
 begin
-  FDriver.Cache.ClearCache;
   if Assigned(FQuery) then
   begin
     for vQuery in FQuery do

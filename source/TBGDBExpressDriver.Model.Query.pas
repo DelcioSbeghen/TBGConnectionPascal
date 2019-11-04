@@ -4,7 +4,7 @@ interface
 
 uses
   TBGConnection.Model.Interfaces, Data.DB, System.Classes,
-  System.SysUtils, Data.SqlExpr, Datasnap.Provider, Datasnap.DBCLient, MidasLib,
+  System.SysUtils, Data.SqlExpr, Datasnap.Provider, Datasnap.DBCLient,
   TBGConnection.Model.DataSet.Proxy, TBGConnection.Model.DataSet.Interfaces,
   TBGConnection.Model.DataSet.Observer, System.Generics.Collections;
 
